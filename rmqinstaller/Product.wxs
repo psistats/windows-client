@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="RabbitMQ.Client.dll"  Language="1033" Version="1.0.0.0" Manufacturer="RabbitMQ" UpgradeCode="cb702a0e-5709-4581-9286-9eacd39d34fd">
+		<Package InstallerVersion="200"  Compressed="no" InstallScope="perMachine" InstallPrivileges="elevated"/>
+    <Feature Id="RabbitMQClient" Title="RabbitMQ.Client.dll" Level="1">
+      <ComponentGroupRef Id="rmqstuff" />
+    </Feature>
+    <Media Id="1" />
+	</Product>
+
+	<Fragment>
+      <Directory Id="TARGETDIR" Name="SourceDir">
+        <Directory Id="ProgramFilesFolder">
+          <Directory Id="ProgramFilesCompanyFolder" Name="Psikon">
+            <Directory Id="PsistatsFolder" Name="Psistats">
+              
+              <Component Id="RabbitMQComponent">
+                <File Id="RabbitMQDLL" Name="RabbitMQ.Client.dll" Source="RabbitMQ.Client.dll"  KeyPath="yes" Assembly=".net"/>
+              </Component>
+              <Component Id="RabbitMQXMLComponent">
+                <File Id="RabbitMQXML" Name="RabbitMQ.Client.xml" Source="RabbitMQ.Client.xml" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+
+    <ComponentGroup Id="rmqstuff">
+      <ComponentRef Id="RabbitMQComponent"/>
+      <ComponentRef Id="RabbitMQXMLComponent"/>
+    </ComponentGroup>
+
+
+	</Fragment>
+</Wix>
