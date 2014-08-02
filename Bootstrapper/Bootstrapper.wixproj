@@ -53,8 +53,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="banner.bmp" />
+    <Content Include="bg.bmp" />
     <Content Include="BsdLicense.rtf" />
+    <Content Include="license.rtf" />
     <Content Include="psistats-black.png" />
+    <Content Include="theme.xml" />
   </ItemGroup>
   <Import Project="$(WixTargetsPath)" />
   <!--

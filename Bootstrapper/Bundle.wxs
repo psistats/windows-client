@@ -5,8 +5,8 @@
           >
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
       <bal:WixStandardBootstrapperApplication
-        LicenseFile="$(sys.SOURCEFILEDIR)BsdLicense.rtf"
-        LogoFile="$(sys.SOURCEFILEDIR)psistats-black.png"
+        LicenseFile="$(sys.SOURCEFILEDIR)license.rtf"
+        LogoFile="$(sys.SOURCEFILEDIR)logo.png"
         />
       
     </BootstrapperApplicationRef>
