@@ -1,0 +1,16 @@
+Bootstrapper/bin/*
+Bootstrapper/obj/*
+PsikonStats.sdf
+PsikonStats.suo
+PsikonStats.v11.suo
+Psistats.Installer/bin/*
+Psistats.Installer/obj/*
+PsistatsApp/bin/*
+PsistatsApp/obj/*
+PsistatsCommon/bin/*
+PsistatsCommon/obj/*
+PsistatsService/bin/*
+PsistatsService/obj/*
+rmqinstaller/obj/*
+rmqinstaller/bin/*
+PsistatsApp/PsikonStats_TemporaryKey.pfx
