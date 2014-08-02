@@ -22,7 +22,7 @@ namespace Psistats
 
         private ManagementObjectSearcher searcher;
 
-        public float uptime
+        public double uptime
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Psistats
                 {
                     uptimeCounter = new PerformanceCounter("System", "System Up Time");
                 }
-                return uptimeCounter.NextValue();
+                return System.Convert.ToDouble(uptimeCounter.NextValue());
             }
         }
 

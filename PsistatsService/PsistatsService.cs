@@ -76,10 +76,50 @@ namespace Psistats.Service
                     server.Connect();
                 }
 
-                string json = "{ \"hostname\": \"" + stat.hostname + "\", \"cpu\": " + stat.cpu.ToString() + ", \"mem\": " + stat.mem.ToString() + " }";
+                string json;
+
+                var json_data = new Dictionary<string, object>();
+
+                if (this.metadata_counter == this.conf.metadata_timer)
+                {
+                    var ipaddr = new List<string>();
+                    ipaddr.Add(stat.ipaddr);
+
+                    json_data.Add("hostname", stat.hostname);
+                    json_data.Add("ipaddr", ipaddr.ToArray());
+                    json_data.Add("cpu", stat.cpu);
+                    json_data.Add("mem", stat.mem);
+                    json_data.Add("uptime", stat.uptime);
+
+                    this.metadata_counter = 0;
+                }
+                else
+                {
+                    json_data.Add("hostname", stat.hostname);
+                    json_data.Add("cpu", stat.cpu);
+                    json_data.Add("mem", stat.mem);
+                    this.metadata_counter += 1;
+                }
+
+                var json_values = new List<string>();
+
+                foreach(string key in json_data.Keys) {
+
+                    if (json_data[key].GetType().Name == "String") {
+                        json_values.Add("\"" + key + "\": \"" + json_data[key]+ "\"");
+                    } else if (json_data[key].GetType().Name == "String[]") {
+                        String[] values = (String[])json_data[key];
+                        json_values.Add("\"" + key + "\": [\"" + string.Join(",", values) + "\"]");
+                    } else if (json_data[key].GetType().Name == "Integer") {
+                        json_values.Add("\"" + key + "\": " + json_data[key].ToString());
+                    } else if (json_data[key].GetType().Name == "Double") {
+                        json_values.Add("\"" + key + "\": " + json_data[key].ToString());
+                    }
+                }
+
+                json = "{" + string.Join(",", json_values.ToArray()) + "}";
 
                 server.SendJson(json);
-                logger.Debug(json);
             }
             catch (Exception exc)
             {
