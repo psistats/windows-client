@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="RabbitMQ.Client.dll"  Language="1033" Version="1.0.0.0" Manufacturer="RabbitMQ" UpgradeCode="cb702a0e-5709-4581-9286-9eacd39d34fd">
+	<Product Id="*" Name="RabbitMQ.Client.dll"  Language="1033" Version="3.3.4" Manufacturer="RabbitMQ" UpgradeCode="cb702a0e-5709-4581-9286-9eacd39d34fd">
 		<Package InstallerVersion="200"  Compressed="no" InstallScope="perMachine" InstallPrivileges="elevated"/>
     <Feature Id="RabbitMQClient" Title="RabbitMQ.Client.dll" Level="1">
       <ComponentGroupRef Id="rmqstuff" />

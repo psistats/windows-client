@@ -51,10 +51,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BsdLicense.rtf" />
-    <Content Include="psistats-black.png" />
-  </ItemGroup>
-  <ItemGroup>
     <WixExtension Include="WixUtilExtension">
       <HintPath>$(WixExtDir)\WixUtilExtension.dll</HintPath>
       <Name>WixUtilExtension</Name>

@@ -40,9 +40,6 @@ namespace Psistats.Service
 
                 this.server = new PsistatsServer(conf);
 
-                this.server.Connect();
-                this.server.Bind(this.stat.hostname);
-
                 double app_timer = this.conf.app_timer * 1000;
 
                 this.serviceTimer = new System.Timers.Timer(app_timer);
@@ -73,7 +70,8 @@ namespace Psistats.Service
             {
                 if (!server.IsConnected())
                 {
-                    server.Connect();
+                    this.server.Connect();
+                    this.server.Bind(this.stat.hostname);
                 }
 
                 string json;
@@ -103,16 +101,24 @@ namespace Psistats.Service
 
                 var json_values = new List<string>();
 
-                foreach(string key in json_data.Keys) {
+                foreach (string key in json_data.Keys)
+                {
 
-                    if (json_data[key].GetType().Name == "String") {
-                        json_values.Add("\"" + key + "\": \"" + json_data[key]+ "\"");
-                    } else if (json_data[key].GetType().Name == "String[]") {
+                    if (json_data[key].GetType().Name == "String")
+                    {
+                        json_values.Add("\"" + key + "\": \"" + json_data[key] + "\"");
+                    }
+                    else if (json_data[key].GetType().Name == "String[]")
+                    {
                         String[] values = (String[])json_data[key];
                         json_values.Add("\"" + key + "\": [\"" + string.Join(",", values) + "\"]");
-                    } else if (json_data[key].GetType().Name == "Integer") {
+                    }
+                    else if (json_data[key].GetType().Name == "Integer")
+                    {
                         json_values.Add("\"" + key + "\": " + json_data[key].ToString());
-                    } else if (json_data[key].GetType().Name == "Double") {
+                    }
+                    else if (json_data[key].GetType().Name == "Double")
+                    {
                         json_values.Add("\"" + key + "\": " + json_data[key].ToString());
                     }
                 }
@@ -121,11 +127,33 @@ namespace Psistats.Service
 
                 server.SendJson(json);
             }
+            catch (RabbitMQ.Client.Exceptions.ConnectFailureException exc)
+            {
+                if (server.IsConnected())
+                {
+                    server.Close();
+                }
+
+                logger.Debug(exc.ToString());
+                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
+            }
+            catch (RabbitMQ.Client.Exceptions.AlreadyClosedException exc)
+            {
+                if (server.IsConnected())
+                {
+                    server.Close();
+                }
+                logger.Debug(exc.ToString());
+                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
+            }
             catch (Exception exc)
             {
-                logger.Debug(exc.Message);
-                logger.Debug(exc.StackTrace);
-                System.Threading.Thread.Sleep(10000);
+                if (server.IsConnected())
+                {
+                    server.Close();
+                }
+                logger.Debug("== UNHANDLED EXCEPTION!!!! ==\r\r" + exc.ToString());
+                System.Threading.Thread.Sleep(30000);
             }
         }
 
