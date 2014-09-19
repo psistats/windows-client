@@ -33,6 +33,7 @@ namespace Psistats
         public int app_timer;
         public int metadata_timer;
         public int retry_timer;
+        public bool app_cputemp;
 
         public Config() { }
 

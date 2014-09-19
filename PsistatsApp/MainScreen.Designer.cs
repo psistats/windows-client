@@ -75,6 +75,8 @@
             this.button_save = new System.Windows.Forms.Button();
             this.button_validate = new System.Windows.Forms.Button();
             this.button_service = new System.Windows.Forms.Button();
+            this.templabel = new System.Windows.Forms.Label();
+            this.app_cputemp = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -179,6 +181,7 @@
             this.server_hostname.Name = "server_hostname";
             this.server_hostname.Size = new System.Drawing.Size(155, 20);
             this.server_hostname.TabIndex = 4;
+            this.server_hostname.TextChanged += new System.EventHandler(this.server_hostname_TextChanged);
             // 
             // server_port
             // 
@@ -187,6 +190,7 @@
             this.server_port.Name = "server_port";
             this.server_port.Size = new System.Drawing.Size(55, 20);
             this.server_port.TabIndex = 5;
+            this.server_port.TextChanged += new System.EventHandler(this.server_port_TextChanged);
             // 
             // server_username
             // 
@@ -195,6 +199,7 @@
             this.server_username.Name = "server_username";
             this.server_username.Size = new System.Drawing.Size(155, 20);
             this.server_username.TabIndex = 6;
+            this.server_username.TextChanged += new System.EventHandler(this.server_username_TextChanged);
             // 
             // server_password
             // 
@@ -203,6 +208,7 @@
             this.server_password.Name = "server_password";
             this.server_password.Size = new System.Drawing.Size(155, 20);
             this.server_password.TabIndex = 7;
+            this.server_password.TextChanged += new System.EventHandler(this.server_password_TextChanged);
             // 
             // label17
             // 
@@ -221,6 +227,7 @@
             this.server_vhost.Name = "server_vhost";
             this.server_vhost.Size = new System.Drawing.Size(155, 20);
             this.server_vhost.TabIndex = 9;
+            this.server_vhost.TextChanged += new System.EventHandler(this.server_vhost_TextChanged);
             // 
             // groupBox2
             // 
@@ -302,6 +309,7 @@
             this.exchange_name.Name = "exchange_name";
             this.exchange_name.Size = new System.Drawing.Size(155, 20);
             this.exchange_name.TabIndex = 4;
+            this.exchange_name.TextChanged += new System.EventHandler(this.exchange_name_TextChanged);
             // 
             // exchange_durable
             // 
@@ -312,6 +320,7 @@
             this.exchange_durable.Size = new System.Drawing.Size(15, 14);
             this.exchange_durable.TabIndex = 6;
             this.exchange_durable.UseVisualStyleBackColor = true;
+            this.exchange_durable.CheckedChanged += new System.EventHandler(this.exchange_durable_CheckedChanged);
             // 
             // exchange_autodelete
             // 
@@ -322,6 +331,7 @@
             this.exchange_autodelete.Size = new System.Drawing.Size(15, 14);
             this.exchange_autodelete.TabIndex = 7;
             this.exchange_autodelete.UseVisualStyleBackColor = true;
+            this.exchange_autodelete.CheckedChanged += new System.EventHandler(this.exchange_autodelete_CheckedChanged);
             // 
             // exchange_type
             // 
@@ -335,6 +345,7 @@
             this.exchange_type.Name = "exchange_type";
             this.exchange_type.Size = new System.Drawing.Size(92, 21);
             this.exchange_type.TabIndex = 8;
+            this.exchange_type.SelectedIndexChanged += new System.EventHandler(this.exchange_type_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -343,7 +354,7 @@
             this.panel2.Controls.Add(this.groupBox3);
             this.panel2.Location = new System.Drawing.Point(358, 9);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(357, 264);
+            this.panel2.Size = new System.Drawing.Size(357, 284);
             this.panel2.TabIndex = 1;
             // 
             // groupBox4
@@ -351,7 +362,7 @@
             this.groupBox4.Controls.Add(this.tableLayoutPanel4);
             this.groupBox4.Location = new System.Drawing.Point(4, 158);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(350, 97);
+            this.groupBox4.Size = new System.Drawing.Size(350, 120);
             this.groupBox4.TabIndex = 1;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Application Tweaks";
@@ -361,6 +372,8 @@
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel4.Controls.Add(this.app_cputemp, 1, 3);
+            this.tableLayoutPanel4.Controls.Add(this.templabel, 0, 3);
             this.tableLayoutPanel4.Controls.Add(this.label5, 0, 0);
             this.tableLayoutPanel4.Controls.Add(this.label6, 0, 1);
             this.tableLayoutPanel4.Controls.Add(this.label16, 0, 2);
@@ -369,18 +382,19 @@
             this.tableLayoutPanel4.Controls.Add(this.app_retry_timer, 1, 2);
             this.tableLayoutPanel4.Location = new System.Drawing.Point(6, 18);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 3;
+            this.tableLayoutPanel4.RowCount = 4;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 72);
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 102);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 5);
+            this.label5.Location = new System.Drawing.Point(3, 6);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 0;
@@ -390,7 +404,7 @@
             // 
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 29);
+            this.label6.Location = new System.Drawing.Point(3, 31);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 13);
             this.label6.TabIndex = 1;
@@ -400,7 +414,7 @@
             // 
             this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(3, 53);
+            this.label16.Location = new System.Drawing.Point(3, 56);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(118, 13);
             this.label16.TabIndex = 2;
@@ -413,22 +427,25 @@
             this.app_main_timer.Name = "app_main_timer";
             this.app_main_timer.Size = new System.Drawing.Size(37, 20);
             this.app_main_timer.TabIndex = 3;
+            this.app_main_timer.TextChanged += new System.EventHandler(this.app_main_timer_TextChanged);
             // 
             // app_meta_timer
             // 
             this.app_meta_timer.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.app_meta_timer.Location = new System.Drawing.Point(175, 27);
+            this.app_meta_timer.Location = new System.Drawing.Point(175, 28);
             this.app_meta_timer.Name = "app_meta_timer";
             this.app_meta_timer.Size = new System.Drawing.Size(37, 20);
             this.app_meta_timer.TabIndex = 4;
+            this.app_meta_timer.TextChanged += new System.EventHandler(this.app_meta_timer_TextChanged);
             // 
             // app_retry_timer
             // 
             this.app_retry_timer.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.app_retry_timer.Location = new System.Drawing.Point(175, 51);
+            this.app_retry_timer.Location = new System.Drawing.Point(175, 53);
             this.app_retry_timer.Name = "app_retry_timer";
             this.app_retry_timer.Size = new System.Drawing.Size(37, 20);
             this.app_retry_timer.TabIndex = 5;
+            this.app_retry_timer.TextChanged += new System.EventHandler(this.app_retry_timer_TextChanged);
             // 
             // groupBox3
             // 
@@ -525,6 +542,7 @@
             this.queue_exclusive.Size = new System.Drawing.Size(15, 14);
             this.queue_exclusive.TabIndex = 5;
             this.queue_exclusive.UseVisualStyleBackColor = true;
+            this.queue_exclusive.CheckedChanged += new System.EventHandler(this.queue_exclusive_CheckedChanged);
             // 
             // queue_durable
             // 
@@ -535,6 +553,7 @@
             this.queue_durable.Size = new System.Drawing.Size(15, 14);
             this.queue_durable.TabIndex = 6;
             this.queue_durable.UseVisualStyleBackColor = true;
+            this.queue_durable.CheckedChanged += new System.EventHandler(this.queue_durable_CheckedChanged);
             // 
             // queue_autodelete
             // 
@@ -545,6 +564,7 @@
             this.queue_autodelete.Size = new System.Drawing.Size(15, 14);
             this.queue_autodelete.TabIndex = 7;
             this.queue_autodelete.UseVisualStyleBackColor = true;
+            this.queue_autodelete.CheckedChanged += new System.EventHandler(this.queue_autodelete_CheckedChanged);
             // 
             // queue_ttl
             // 
@@ -553,6 +573,7 @@
             this.queue_ttl.Name = "queue_ttl";
             this.queue_ttl.Size = new System.Drawing.Size(56, 20);
             this.queue_ttl.TabIndex = 8;
+            this.queue_ttl.TextChanged += new System.EventHandler(this.queue_ttl_TextChanged);
             // 
             // queue_prefix
             // 
@@ -561,10 +582,11 @@
             this.queue_prefix.Name = "queue_prefix";
             this.queue_prefix.Size = new System.Drawing.Size(166, 20);
             this.queue_prefix.TabIndex = 9;
+            this.queue_prefix.TextChanged += new System.EventHandler(this.queue_prefix_TextChanged);
             // 
             // button_save
             // 
-            this.button_save.Location = new System.Drawing.Point(637, 276);
+            this.button_save.Location = new System.Drawing.Point(640, 299);
             this.button_save.Name = "button_save";
             this.button_save.Size = new System.Drawing.Size(75, 23);
             this.button_save.TabIndex = 3;
@@ -574,7 +596,7 @@
             // 
             // button_validate
             // 
-            this.button_validate.Location = new System.Drawing.Point(556, 276);
+            this.button_validate.Location = new System.Drawing.Point(559, 299);
             this.button_validate.Name = "button_validate";
             this.button_validate.Size = new System.Drawing.Size(75, 23);
             this.button_validate.TabIndex = 4;
@@ -584,7 +606,7 @@
             // 
             // button_service
             // 
-            this.button_service.Location = new System.Drawing.Point(448, 276);
+            this.button_service.Location = new System.Drawing.Point(451, 299);
             this.button_service.Name = "button_service";
             this.button_service.Size = new System.Drawing.Size(102, 23);
             this.button_service.TabIndex = 5;
@@ -592,11 +614,32 @@
             this.button_service.UseVisualStyleBackColor = true;
             this.button_service.Click += new System.EventHandler(this.button_service_Click);
             // 
+            // templabel
+            // 
+            this.templabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.templabel.AutoSize = true;
+            this.templabel.Location = new System.Drawing.Point(3, 82);
+            this.templabel.Name = "templabel";
+            this.templabel.Size = new System.Drawing.Size(92, 13);
+            this.templabel.TabIndex = 6;
+            this.templabel.Text = "CPU Temperature";
+            this.templabel.Click += new System.EventHandler(this.label18_Click);
+            // 
+            // app_cputemp
+            // 
+            this.app_cputemp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.app_cputemp.AutoSize = true;
+            this.app_cputemp.Location = new System.Drawing.Point(175, 81);
+            this.app_cputemp.Name = "app_cputemp";
+            this.app_cputemp.Size = new System.Drawing.Size(15, 14);
+            this.app_cputemp.TabIndex = 10;
+            this.app_cputemp.UseVisualStyleBackColor = true;
+            // 
             // MainScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 305);
+            this.ClientSize = new System.Drawing.Size(724, 325);
             this.Controls.Add(this.button_service);
             this.Controls.Add(this.button_validate);
             this.Controls.Add(this.button_save);
@@ -675,5 +718,7 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox server_vhost;
         public System.Windows.Forms.TextBox app_main_timer;
+        private System.Windows.Forms.Label templabel;
+        private System.Windows.Forms.CheckBox app_cputemp;
     }
 }

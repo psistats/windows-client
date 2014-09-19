@@ -66,6 +66,24 @@ namespace Psistats
             }
         }
 
+        public double cpu_temp
+        {
+            get
+            {
+
+                Double CPUtprt = 0;
+
+                ManagementObjectSearcher mos = new ManagementObjectSearcher(@"root\WMI", "Select * From MSAcpi_ThermalZoneTemperature");
+                foreach (System.Management.ManagementObject mo in mos.Get())
+                {
+                    CPUtprt = Convert.ToDouble(Convert.ToDouble(mo.GetPropertyValue("CurrentTemperature").ToString()) - 2732) / 10;
+                }
+
+                return CPUtprt;
+
+            }
+        }
+
         public double mem
         {
             get

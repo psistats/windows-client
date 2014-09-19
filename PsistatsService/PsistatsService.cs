@@ -89,6 +89,11 @@ namespace Psistats.Service
                     json_data.Add("mem", stat.mem);
                     json_data.Add("uptime", stat.uptime);
 
+                    if (conf.app_cputemp)
+                    {
+                        json_data.Add("cpu_temp", stat.cpu_temp);
+                    }
+
                     this.metadata_counter = 0;
                 }
                 else

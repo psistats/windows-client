@@ -20,12 +20,15 @@ namespace Psistats.App
 
         private DoerBox box;
 
+        private bool changed;
+
         public delegate void UpdateBoxDelegate(string msg, int progress, bool ok);
         public delegate void ErrorBoxDelegate(string msg, int progress);
         public delegate void SetTextDelegate(TextBox control, string msg);
         public delegate void SetComboBoxTextDelegate(ComboBox control, string msg);
         public delegate void SetCheckedDelegate(CheckBox control, bool chkd);
         public delegate void ToggleServiceButtonDelegate(bool running);
+        public delegate void UpdateSaveButtonDelegate();
 
         public MainScreen()
         {
@@ -230,6 +233,7 @@ namespace Psistats.App
             conf.app_timer = this.GetNumber(app_main_timer);
             conf.metadata_timer = this.GetNumber(app_meta_timer);
             conf.retry_timer = this.GetNumber(app_retry_timer);
+            conf.app_cputemp = this.GetChecked(app_cputemp);
 
             return conf;
         }
@@ -282,17 +286,29 @@ namespace Psistats.App
 
         private void SaveConfig()
         {
-
             try
             {
                 this.UpdateBox("Create config object", 50, true);
                 Config conf = FactoryConfig();   
                 Config.WriteConf(conf);
                 this.UpdateBox("Configuration saved!", 100, true);
+                this.UpdateSaveButton();
             } catch (Exception e) {
                 this.ErrorBox(e.Message, 100);
             }
+        }
 
+        private void UpdateSaveButton()
+        {
+            if (this.button_save.InvokeRequired)
+            {
+                this.button_save.Invoke(new UpdateSaveButtonDelegate(UpdateSaveButton), new object[] { });
+            }
+            else
+            {
+                this.button_save.Text = "Save";
+                this.changed = false;
+            }
         }
 
         public void ErrorBox(string msg, int progress)
@@ -428,5 +444,106 @@ namespace Psistats.App
             serviceThread.Start();
             
         }
+
+        private void server_hostname_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void settings_changed()
+        {
+            if (this.changed != true)
+            {
+                this.button_save.Text = this.button_save.Text += " *";
+                this.changed = true;
+            }
+            
+        }
+
+        private void server_port_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void server_username_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void server_password_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void server_vhost_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void exchange_name_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void exchange_type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void exchange_durable_CheckedChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void exchange_autodelete_CheckedChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void queue_prefix_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void queue_exclusive_CheckedChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void queue_durable_CheckedChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void queue_autodelete_CheckedChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void queue_ttl_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void app_main_timer_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void app_meta_timer_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void app_retry_timer_TextChanged(object sender, EventArgs e)
+        {
+            this.settings_changed();
+        }
+
+        private void label18_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
