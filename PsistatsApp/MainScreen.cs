@@ -262,7 +262,7 @@ namespace Psistats.App
                 logger.Debug("Exchange Type: " + conf.exchange_type);
 
                 this.UpdateBox("Connecting to RabbitMQ Server", 50, false);
-                PsistatsServer ps = new PsistatsServer(conf);
+                var ps = new Psistats.MessageQueue.Server(conf);
                 ps.Connect();
 
                 this.UpdateBox("Creating queue", 50, false);

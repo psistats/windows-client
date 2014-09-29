@@ -14,7 +14,7 @@ namespace Psistats
 {
     public class Stat
     {
-        private string _ipaddr = null;
+        private List<String> _ipaddr = null;
         private string _hostname = null;
 
         private PerformanceCounter cpuCounter;
@@ -47,14 +47,15 @@ namespace Psistats
             }
         }
 
-        public string ipaddr
+        public List<String> ipaddr
         {
             get
             {
-                if (this._ipaddr == null)
+                if (this._ipaddr.Count() == 0)
                 {
-                    this._ipaddr = this.localIPAddress();
+                    this._ipaddr.Add(this.localIPAddress());
                 }
+
                 return this._ipaddr;
             }
         }

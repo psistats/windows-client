@@ -54,6 +54,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.app_cputemp = new System.Windows.Forms.CheckBox();
+            this.templabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -75,8 +77,6 @@
             this.button_save = new System.Windows.Forms.Button();
             this.button_validate = new System.Windows.Forms.Button();
             this.button_service = new System.Windows.Forms.Button();
-            this.templabel = new System.Windows.Forms.Label();
-            this.app_cputemp = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -390,6 +390,27 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(344, 102);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
+            // app_cputemp
+            // 
+            this.app_cputemp.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.app_cputemp.AutoSize = true;
+            this.app_cputemp.Location = new System.Drawing.Point(175, 81);
+            this.app_cputemp.Name = "app_cputemp";
+            this.app_cputemp.Size = new System.Drawing.Size(15, 14);
+            this.app_cputemp.TabIndex = 10;
+            this.app_cputemp.UseVisualStyleBackColor = true;
+            // 
+            // templabel
+            // 
+            this.templabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.templabel.AutoSize = true;
+            this.templabel.Location = new System.Drawing.Point(3, 82);
+            this.templabel.Name = "templabel";
+            this.templabel.Size = new System.Drawing.Size(92, 13);
+            this.templabel.TabIndex = 6;
+            this.templabel.Text = "CPU Temperature";
+            this.templabel.Click += new System.EventHandler(this.label18_Click);
+            // 
             // label5
             // 
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -613,27 +634,6 @@
             this.button_service.Text = "Start Service";
             this.button_service.UseVisualStyleBackColor = true;
             this.button_service.Click += new System.EventHandler(this.button_service_Click);
-            // 
-            // templabel
-            // 
-            this.templabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.templabel.AutoSize = true;
-            this.templabel.Location = new System.Drawing.Point(3, 82);
-            this.templabel.Name = "templabel";
-            this.templabel.Size = new System.Drawing.Size(92, 13);
-            this.templabel.TabIndex = 6;
-            this.templabel.Text = "CPU Temperature";
-            this.templabel.Click += new System.EventHandler(this.label18_Click);
-            // 
-            // app_cputemp
-            // 
-            this.app_cputemp.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.app_cputemp.AutoSize = true;
-            this.app_cputemp.Location = new System.Drawing.Point(175, 81);
-            this.app_cputemp.Name = "app_cputemp";
-            this.app_cputemp.Size = new System.Drawing.Size(15, 14);
-            this.app_cputemp.TabIndex = 10;
-            this.app_cputemp.UseVisualStyleBackColor = true;
             // 
             // MainScreen
             // 

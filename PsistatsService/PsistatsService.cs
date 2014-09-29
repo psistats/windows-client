@@ -22,7 +22,7 @@ namespace Psistats.Service
 
         private Logger logger;
         private Stat stat;
-        private PsistatsServer server;
+        private Psistats.MessageQueue.Server server;
         private Config conf;
 
         private int metadata_counter = 0;
@@ -38,7 +38,7 @@ namespace Psistats.Service
 
                 this.logger.Debug(this.conf);
 
-                this.server = new PsistatsServer(conf);
+                this.server = new Psistats.MessageQueue.Server(conf);
 
                 double app_timer = this.conf.app_timer * 1000;
 
@@ -66,6 +66,7 @@ namespace Psistats.Service
 
         private void DoWork(object sender, System.Timers.ElapsedEventArgs e)
         {
+            /*
             try
             {
                 if (!server.IsConnected())
@@ -160,6 +161,7 @@ namespace Psistats.Service
                 logger.Debug("== UNHANDLED EXCEPTION!!!! ==\r\r" + exc.ToString());
                 System.Threading.Thread.Sleep(30000);
             }
+             * */
         }
 
         protected override void OnStop()

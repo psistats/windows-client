@@ -20,7 +20,7 @@ namespace Psistats.App
 
             // Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainScreen());
+            Application.Run(new MainScreen2());
         }
 
         static void CurrentDomain_UnhandledException (object sender, UnhandledExceptionEventArgs e)

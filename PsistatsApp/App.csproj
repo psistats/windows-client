@@ -81,6 +81,10 @@
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="RabbitMQ.Client, Version=3.1.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\rmqinstaller\RabbitMQ.Client.dll</HintPath>
@@ -92,7 +96,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -108,14 +114,35 @@
     <Compile Include="MainScreen.Designer.cs">
       <DependentUpon>MainScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainScreen2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainScreen2.Designer.cs">
+      <DependentUpon>MainScreen2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingsScreen.Designer.cs">
+      <DependentUpon>SettingsScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Workers\BasicFormWorker.cs" />
+    <Compile Include="Workers\ConfigSaver.cs" />
+    <Compile Include="Workers\IWorker.cs" />
+    <Compile Include="Workers\LoadSettingsScreen.cs" />
+    <Compile Include="Workers\Resizer.cs" />
+    <Compile Include="Workers\Service.cs" />
     <EmbeddedResource Include="DoerBox.resx">
       <DependentUpon>DoerBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainScreen.resx">
       <DependentUpon>MainScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainScreen2.resx">
+      <DependentUpon>MainScreen2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -127,6 +154,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SettingsScreen.resx">
+      <DependentUpon>SettingsScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -161,6 +191,10 @@
     <Content Include="psistats-red.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MessageQueue\MessageQueue.csproj">
+      <Project>{33b55219-b51f-4974-b774-93f2aa779362}</Project>
+      <Name>MessageQueue</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PsistatsCommon\Common.csproj">
       <Project>{e30964b4-4453-42dc-8adc-1033a3c25728}</Project>
       <Name>Common</Name>

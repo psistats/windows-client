@@ -67,6 +67,7 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -106,6 +107,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MessageQueue\MessageQueue.csproj">
+      <Project>{33b55219-b51f-4974-b774-93f2aa779362}</Project>
+      <Name>MessageQueue</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PsistatsCommon\Common.csproj">
       <Project>{e30964b4-4453-42dc-8adc-1033a3c25728}</Project>
       <Name>Common</Name>

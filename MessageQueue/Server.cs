@@ -4,18 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Psistats
+namespace Psistats.MessageQueue
 {
-    public class PsistatsServer
+    public class Server
     {
         private Config conf;
 
         private IConnection conn;
         private IModel channel;
 
+        private QueueingBasicConsumer consumer;
+
         private string queue_name;
 
-        public PsistatsServer(Config conf)
+        public Server(Config conf)
         {
             this.conf = conf;
         }
@@ -62,6 +64,27 @@ namespace Psistats
             channel.ExchangeDeclare(conf.exchange_name, conf.exchange_type.ToLower(), conf.exchange_durable, conf.exchange_autodelete, null);
             channel.QueueDeclare(queue_name, conf.queue_durable, conf.queue_exclusive, conf.queue_autodelete, queue_opts);
             channel.QueueBind(queue_name, conf.exchange_name, queue_name);
+        }
+
+        public Message getNextMessage()
+        {
+            if (consumer == null)
+            {
+                consumer = new QueueingBasicConsumer(channel);
+                channel.BasicConsume(queue_name, true, consumer);
+            }
+
+            BasicGetResult result = channel.BasicGet(queue_name, true);
+            if (result != null)
+            {
+                channel.BasicAck(result.DeliveryTag, false);
+
+                string json = Encoding.UTF8.GetString(result.Body, 0, result.Body.Length);
+
+                return Message.FromJson(json);
+            }
+
+            return null;
         }
 
         public void DeleteQueue()
