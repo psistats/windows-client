@@ -129,6 +129,9 @@
       <DependentUpon>SettingsScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Utils\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Workers\BasicFormWorker.cs" />
     <Compile Include="Workers\ConfigSaver.cs" />
     <Compile Include="Workers\IWorker.cs" />

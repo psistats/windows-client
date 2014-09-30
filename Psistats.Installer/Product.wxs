@@ -47,6 +47,9 @@
         <Component Id="CommonLibComponent">
           <File Id="Common" Name="$(var.Common.TargetFileName)" Source="$(var.Common.TargetPath)" DiskId="1" />
         </Component>
+        <Component Id="MessageQueueComponent">
+          <File Id="MessageQueue" Name="$(var.MessageQueue.TargetFileName)" Source="$(var.MessageQueue.TargetPath)" DiskId="1" />
+        </Component>
         <Component Id="ConfigLibComponent" Guid="BCE0E6AC-8799-46D8-8984-EF79B0A0F2D7">
           <RegistryValue Root="HKLM" Key="SOFTWARE\Psikon\Psistats" Value="[INSTALLFOLDER]psistats.xml" Type="string" Name="config" KeyPath="yes" />
         </Component>

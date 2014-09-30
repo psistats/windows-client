@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.service_status_label = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cpu_meter_percentage_label = new System.Windows.Forms.Label();
             this.button_settings = new System.Windows.Forms.Button();
@@ -51,16 +51,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Service Status:";
             // 
-            // label2
+            // service_status_label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.ForestGreen;
-            this.label2.Location = new System.Drawing.Point(190, 73);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 31);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "ONLINE";
+            this.service_status_label.AutoSize = true;
+            this.service_status_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.service_status_label.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.service_status_label.Location = new System.Drawing.Point(190, 73);
+            this.service_status_label.Name = "service_status_label";
+            this.service_status_label.Size = new System.Drawing.Size(41, 31);
+            this.service_status_label.TabIndex = 2;
+            this.service_status_label.Text = "...";
             // 
             // label3
             // 
@@ -98,6 +98,7 @@
             // button_service
             // 
             this.button_service.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.button_service.Enabled = false;
             this.button_service.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_service.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_service.Location = new System.Drawing.Point(318, 73);
@@ -143,7 +144,6 @@
             this.label_notifications.Name = "label_notifications";
             this.label_notifications.Size = new System.Drawing.Size(356, 19);
             this.label_notifications.TabIndex = 8;
-            this.label_notifications.Text = "Loading...";
             this.label_notifications.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // MainScreen2
@@ -159,7 +159,7 @@
             this.Controls.Add(this.button_settings);
             this.Controls.Add(this.cpu_meter_percentage_label);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.service_status_label);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -174,7 +174,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label service_status_label;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label cpu_meter_percentage_label;
         private System.Windows.Forms.Button button_settings;

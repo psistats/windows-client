@@ -51,8 +51,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.exchangeType = new System.Windows.Forms.ComboBox();
             this.exchangeSettings = new System.Windows.Forms.CheckedListBox();
-            this.exchangeRoutingKey = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.exchangeName = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -72,6 +70,7 @@
             // 
             // serverSettingsPanel
             // 
+            this.serverSettingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.serverSettingsPanel.Controls.Add(this.serverPassword);
             this.serverSettingsPanel.Controls.Add(this.label7);
             this.serverSettingsPanel.Controls.Add(this.serverUsername);
@@ -181,6 +180,7 @@
             // 
             // queueSettingsPanel
             // 
+            this.queueSettingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.queueSettingsPanel.Controls.Add(this.queueSettings);
             this.queueSettingsPanel.Controls.Add(this.queueMessageTTL);
             this.queueSettingsPanel.Controls.Add(this.label8);
@@ -189,7 +189,7 @@
             this.queueSettingsPanel.Controls.Add(this.label13);
             this.queueSettingsPanel.Location = new System.Drawing.Point(12, 164);
             this.queueSettingsPanel.Name = "queueSettingsPanel";
-            this.queueSettingsPanel.Size = new System.Drawing.Size(217, 163);
+            this.queueSettingsPanel.Size = new System.Drawing.Size(217, 126);
             this.queueSettingsPanel.TabIndex = 12;
             // 
             // queueSettings
@@ -210,10 +210,8 @@
             // 
             this.queueMessageTTL.Location = new System.Drawing.Point(89, 48);
             this.queueMessageTTL.Name = "queueMessageTTL";
-            this.queueMessageTTL.PasswordChar = '*';
-            this.queueMessageTTL.Size = new System.Drawing.Size(100, 20);
+            this.queueMessageTTL.Size = new System.Drawing.Size(53, 20);
             this.queueMessageTTL.TabIndex = 10;
-            this.queueMessageTTL.UseSystemPasswordChar = true;
             // 
             // label8
             // 
@@ -251,23 +249,22 @@
             // 
             // exchangeSettingsPanel
             // 
+            this.exchangeSettingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.exchangeSettingsPanel.Controls.Add(this.label14);
             this.exchangeSettingsPanel.Controls.Add(this.exchangeType);
             this.exchangeSettingsPanel.Controls.Add(this.exchangeSettings);
-            this.exchangeSettingsPanel.Controls.Add(this.exchangeRoutingKey);
-            this.exchangeSettingsPanel.Controls.Add(this.label9);
             this.exchangeSettingsPanel.Controls.Add(this.exchangeName);
             this.exchangeSettingsPanel.Controls.Add(this.label10);
             this.exchangeSettingsPanel.Controls.Add(this.label11);
             this.exchangeSettingsPanel.Location = new System.Drawing.Point(235, 200);
             this.exchangeSettingsPanel.Name = "exchangeSettingsPanel";
-            this.exchangeSettingsPanel.Size = new System.Drawing.Size(217, 163);
+            this.exchangeSettingsPanel.Size = new System.Drawing.Size(217, 112);
             this.exchangeSettingsPanel.TabIndex = 13;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(49, 74);
+            this.label14.Location = new System.Drawing.Point(49, 53);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(34, 13);
             this.label14.TabIndex = 14;
@@ -281,7 +278,7 @@
             "Fanout",
             "Topic",
             "Headers"});
-            this.exchangeType.Location = new System.Drawing.Point(89, 71);
+            this.exchangeType.Location = new System.Drawing.Point(89, 50);
             this.exchangeType.Name = "exchangeType";
             this.exchangeType.Size = new System.Drawing.Size(92, 21);
             this.exchangeType.TabIndex = 13;
@@ -294,28 +291,10 @@
             this.exchangeSettings.Items.AddRange(new object[] {
             "Durable",
             "Autodelete"});
-            this.exchangeSettings.Location = new System.Drawing.Point(89, 98);
+            this.exchangeSettings.Location = new System.Drawing.Point(88, 77);
             this.exchangeSettings.Name = "exchangeSettings";
             this.exchangeSettings.Size = new System.Drawing.Size(129, 30);
             this.exchangeSettings.TabIndex = 12;
-            // 
-            // exchangeRoutingKey
-            // 
-            this.exchangeRoutingKey.Location = new System.Drawing.Point(89, 48);
-            this.exchangeRoutingKey.Name = "exchangeRoutingKey";
-            this.exchangeRoutingKey.PasswordChar = '*';
-            this.exchangeRoutingKey.Size = new System.Drawing.Size(100, 20);
-            this.exchangeRoutingKey.TabIndex = 10;
-            this.exchangeRoutingKey.UseSystemPasswordChar = true;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(15, 51);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(68, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "Routing Key:";
             // 
             // exchangeName
             // 
@@ -344,6 +323,7 @@
             // 
             // serviceSettingsPanel
             // 
+            this.serviceSettingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.serviceSettingsPanel.Controls.Add(this.label15);
             this.serviceSettingsPanel.Controls.Add(this.appSecondaryTimer);
             this.serviceSettingsPanel.Controls.Add(this.label16);
@@ -369,10 +349,8 @@
             // 
             this.appSecondaryTimer.Location = new System.Drawing.Point(111, 45);
             this.appSecondaryTimer.Name = "appSecondaryTimer";
-            this.appSecondaryTimer.PasswordChar = '*';
             this.appSecondaryTimer.Size = new System.Drawing.Size(47, 20);
             this.appSecondaryTimer.TabIndex = 10;
-            this.appSecondaryTimer.UseSystemPasswordChar = true;
             // 
             // label16
             // 
@@ -410,7 +388,7 @@
             // 
             // button_save_settings
             // 
-            this.button_save_settings.Location = new System.Drawing.Point(12, 340);
+            this.button_save_settings.Location = new System.Drawing.Point(12, 296);
             this.button_save_settings.Name = "button_save_settings";
             this.button_save_settings.Size = new System.Drawing.Size(217, 23);
             this.button_save_settings.TabIndex = 16;
@@ -422,7 +400,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 372);
+            this.ClientSize = new System.Drawing.Size(455, 322);
             this.Controls.Add(this.button_save_settings);
             this.Controls.Add(this.serviceSettingsPanel);
             this.Controls.Add(this.exchangeSettingsPanel);
@@ -460,7 +438,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel exchangeSettingsPanel;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label14;
@@ -479,7 +456,6 @@
         public System.Windows.Forms.TextBox queueName;
         public System.Windows.Forms.CheckedListBox queueSettings;
         public System.Windows.Forms.CheckedListBox exchangeSettings;
-        public System.Windows.Forms.TextBox exchangeRoutingKey;
         public System.Windows.Forms.TextBox exchangeName;
         public System.Windows.Forms.ComboBox exchangeType;
         public System.Windows.Forms.TextBox appSecondaryTimer;

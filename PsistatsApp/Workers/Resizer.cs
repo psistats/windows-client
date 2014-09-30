@@ -58,7 +58,7 @@ namespace Psistats.App.Workers
                     if (this.height <= Resizer.MAX_HEIGHT)
                     {
                         this.height = this.height + 1;
-                        this.form.SetWindowHeight(this.height);
+                        this.form.SetWindowHeight(this.form, this.height);
                     } else {
                         this.direction = Resizer.DIR_UP;
                         break;
@@ -69,7 +69,7 @@ namespace Psistats.App.Workers
                     if (this.form.Height > Resizer.MIN_HEIGHT)
                     {
                         this.height = this.height - 1;
-                        this.form.SetWindowHeight(this.height);
+                        this.form.SetWindowHeight(this.form, this.height);
                     } else {
                         this.direction = Resizer.DIR_DOWN;
                         break;

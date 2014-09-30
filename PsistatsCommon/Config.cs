@@ -13,27 +13,27 @@ namespace Psistats
 {
     public class Config
     {
-        public string server_hostname;
-        public int server_port;
-        public string server_username;
-        public string server_password;
-        public string server_vhost;
+        public string server_hostname = "localhost";
+        public int server_port = 5672;
+        public string server_username = "guest";
+        public string server_password = "guest";
+        public string server_vhost = "/";
 
-        public string exchange_name;
-        public string exchange_type;
-        public bool exchange_durable;
-        public bool exchange_autodelete;
+        public string exchange_name = "psistats";
+        public string exchange_type = "Topic";
+        public bool exchange_durable = false;
+        public bool exchange_autodelete = false;
 
-        public string queue_prefix;
-        public bool queue_exclusive;
-        public bool queue_durable;
-        public bool queue_autodelete;
-        public int queue_ttl;
+        public string queue_prefix = "psistats";
+        public bool queue_exclusive = true;
+        public bool queue_durable = false;
+        public bool queue_autodelete = true;
+        public int queue_ttl = 10000;
 
-        public int app_timer;
-        public int metadata_timer;
-        public int retry_timer;
-        public bool app_cputemp;
+        public int app_timer = 1;
+        public int metadata_timer = 5;
+        public int retry_timer = 5;
+        public bool app_cputemp = true;
 
         public Config() { }
 
@@ -46,6 +46,8 @@ namespace Psistats
             string keyname = root + "\\" + path;
 
             string default_conf = Environment.SpecialFolder.CommonApplicationData + "\\psistats.conf";
+
+            Debug.WriteLine("Config file: " + default_conf);
 
             string conf_file = (string)Registry.GetValue(keyname, key, default_conf);
 

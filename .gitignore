@@ -13,4 +13,6 @@ PsistatsService/bin/*
 PsistatsService/obj/*
 rmqinstaller/obj/*
 rmqinstaller/bin/*
+MessageQueue/obj/*
+MessageQueue/bin/*
 PsistatsApp/PsikonStats_TemporaryKey.pfx
