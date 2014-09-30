@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -13,7 +14,7 @@ namespace Psistats.App.Workers
         public override void DoWork(object sender, DoWorkEventArgs e)
         {
             this.form.SetNotificationText("Checking service status");
-            if (PsistatsServiceUtils.IsRunning() == true)
+            if (Psistats.ServiceUtils.Utils.IsRunning() == true)
             {
                 this.form.SetServiceButton(true);
                 this.form.SetTextContent(this.form.service_status_label, "Online");
@@ -23,12 +24,6 @@ namespace Psistats.App.Workers
                 this.form.SetServiceButton(false);
                 this.form.SetTextContent(this.form.service_status_label, "Offline");
             }
-
-            this.form.SetNotificationText(" ");
-        }
-
-        public override void Completed(object sender, RunWorkerCompletedEventArgs e)
-        {
         }
     }
 
@@ -42,15 +37,33 @@ namespace Psistats.App.Workers
         public override void DoWork(object sender, DoWorkEventArgs e)
         {
             this.form.SetNotificationText("Attempting to start service");
-            System.Threading.Thread.Sleep(2000);
-            this.form.SetNotificationText("Service started successfully");
 
-            Resizer resizer = new Resizer(this.form);
-            resizer.Start();
-        }
+            try
+            {
+                Process process = null;
+                ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
-        public override void Completed(object sender, RunWorkerCompletedEventArgs e)
-        {
+                processStartInfo.FileName = "PsistatsServiceCLI.EXE";
+
+                processStartInfo.Verb = "runas";
+                processStartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                processStartInfo.UseShellExecute = true;
+                processStartInfo.Arguments = "install";
+
+                process = Process.Start(processStartInfo);
+                process.WaitForExit();
+
+                var nextWorker = new ServiceChecker(this.form);
+                nextWorker.Start();
+
+            }
+            catch (Exception exc)
+            {
+                Debug.WriteLine(exc.ToString());
+                Debug.WriteLine(exc.Message);
+                Debug.WriteLine(exc.StackTrace);
+                this.SetCompletedMessage("Was not able to start service properly");
+            }
         }
     }
 }

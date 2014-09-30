@@ -62,7 +62,5 @@ namespace Psistats.App.Workers
                 this.form.SetNotificationText("Could not load config file - PERIMISSION DENIED");
             }
         }
-
-        public override void Completed(object sender, RunWorkerCompletedEventArgs e) { }
     }
 }

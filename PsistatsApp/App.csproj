@@ -206,6 +206,10 @@
       <Project>{634e8117-1097-4278-96e6-ea2fc7ac92db}</Project>
       <Name>Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServiceCLI\PsistatsServiceCLI.csproj">
+      <Project>{c99a166f-61e4-488b-ad55-cbf0605b7252}</Project>
+      <Name>PsistatsServiceCLI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

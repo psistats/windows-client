@@ -70,10 +70,7 @@ namespace Psistats.App
 
                 this.UpdateBox("Checking service", 50, false);
 
-                if (PsistatsServiceUtils.IsRunning())
-                {
-                    this.button_service.Text = "Stop Service";
-                }
+                
 
                 box.Close();
             }
@@ -394,8 +391,8 @@ namespace Psistats.App
 
         private void ToggleService()
         {
-            try
-            {
+          
+                /*
                 UpdateBox("Checking service...", 25, false);
 
                 if (PsistatsServiceUtils.IsInstalled())
@@ -435,6 +432,7 @@ namespace Psistats.App
             {
                 ErrorBox("Error starting service: " + e.Message, 100);
             }
+                 * */
         }
 
         private void button_service_Click(object sender, EventArgs e)

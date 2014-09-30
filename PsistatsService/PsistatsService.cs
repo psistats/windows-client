@@ -17,7 +17,7 @@ namespace Psistats.Service
 
         public PsistatsService()
         {
-            this.ServiceName = "Psistats Service";
+            this.ServiceName = "PsistatsService";
 
             this.EventLog.Source = this.ServiceName;
             this.EventLog.Log = "Application";

@@ -27,8 +27,5 @@ namespace Psistats.App.Workers
             this.form.SetNotificationText("Config Saved");
             this.settingsScreen.ThreadClose(this.settingsScreen);
         }
-
-        public override void Completed(object sender, RunWorkerCompletedEventArgs e) { }
-
     }
 }

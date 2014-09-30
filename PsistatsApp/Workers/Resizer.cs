@@ -79,7 +79,5 @@ namespace Psistats.App.Workers
                 System.Threading.Thread.Sleep(this.speed);
             }
         }
-
-        public override void Completed(object sender, RunWorkerCompletedEventArgs e) {}
     }
 }

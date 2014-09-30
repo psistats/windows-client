@@ -17,7 +17,7 @@ namespace Psistats.Service
             si.DisplayName = "Psistats Service";
             si.StartType = ServiceStartMode.Automatic;
 
-            si.ServiceName = "Psistats Service";
+            si.ServiceName = "PsistatsService";
 
             this.Installers.Add(spi);
             this.Installers.Add(si);

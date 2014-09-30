@@ -12,6 +12,8 @@ namespace Psistats.App.Workers
         protected MainScreen2 form;
         protected BackgroundWorker worker;
 
+        private string completedMessage;
+
         public BasicFormWorker(MainScreen2 form)
         {
             this.form = form;
@@ -30,6 +32,11 @@ namespace Psistats.App.Workers
             worker.DoWork += DoWork;
         }
 
+        protected void SetCompletedMessage(string msg)
+        {
+            this.completedMessage = msg;
+        }
+
         public BackgroundWorker GetWorker()
         {
             if (this.worker == null)
@@ -40,6 +47,9 @@ namespace Psistats.App.Workers
         }
 
         abstract public void DoWork(object sender, DoWorkEventArgs e);
-        abstract public void Completed(object sender, RunWorkerCompletedEventArgs e);
+
+        public void Completed(object sender, RunWorkerCompletedEventArgs e) {
+            this.form.SetNotificationText(this.completedMessage);
+        }
     }
 }
