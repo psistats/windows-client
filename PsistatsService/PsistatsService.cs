@@ -1,22 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Net;
-using System.Threading;
-using RabbitMQ.Client;
-using System.Net.Sockets;
-using Psistats;
-using System.IO;
-using System.Runtime.InteropServices;
 
 namespace Psistats.Service
 {
-    partial class PsistatsService : ServiceBase, IDisposable
+    class PsistatsService : ServiceBase, IDisposable
     {
         private System.Timers.Timer serviceTimer;
 
@@ -27,45 +15,87 @@ namespace Psistats.Service
 
         private int metadata_counter = 0;
 
+        public PsistatsService()
+        {
+            this.ServiceName = "Psistats Service";
+
+            this.EventLog.Source = this.ServiceName;
+            this.EventLog.Log = "Application";
+
+            this.CanHandlePowerEvent = false;
+            this.CanHandleSessionChangeEvent = false;
+            this.CanPauseAndContinue = false;
+            this.CanShutdown = false;
+
+            this.CanStop = true;
+        }
+
+        static void Main()
+        {
+            ServiceBase.Run(new PsistatsService());
+        }
+
+        protected string logExcMessage(Exception e)
+        {
+            string msg = e.Message;
+            msg += "\r" + e.StackTrace;
+            if (e.InnerException != null)
+            {
+                msg += "\r Caused by: ";
+                msg += this.logExcMessage(e.InnerException);
+            }
+
+            return msg;
+        }
+
+        protected void logException(Exception e) {
+
+            this.EventLog.WriteEntry(this.logExcMessage(e), EventLogEntryType.Error);
+        }
+
+        protected void debug(String msg)
+        {
+            this.EventLog.WriteEntry(msg, EventLogEntryType.Information);
+        }
+
         protected override void OnStart(string[] args)
         {
-            this.logger = new Logger("PsistatsService");
+            this.EventLog.WriteEntry("Starting Psistats Service");
+
             this.stat = new Stat();
 
             try
             {
-                this.conf = Config.LoadConf();
+                //this.conf = Config.LoadConf();
 
-                this.logger.Debug(this.conf);
+                //this.logger.Debug(this.conf);
 
-                this.server = new Psistats.MessageQueue.Server(conf);
+                //this.server = new Psistats.MessageQueue.Server(conf);
 
-                double app_timer = this.conf.app_timer * 1000;
+                //double app_timer = this.conf.app_timer * 1000;
 
-                this.serviceTimer = new System.Timers.Timer(app_timer);
+                this.serviceTimer = new System.Timers.Timer(1000);
                 this.serviceTimer.AutoReset = true;
                 this.serviceTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.DoWork);
                 this.serviceTimer.Start();
             }
             catch (Exception exc)
             {
-                string error_msg = "Exception!\n" +
-                    exc.Message + "\n" +
-                    exc.StackTrace + "\n";
-
-                if (exc.InnerException != null)
-                {
-                    error_msg = error_msg + exc.InnerException.Message + "\n" + exc.InnerException.StackTrace;
-                }
-
-                this.logger.Debug(error_msg);
-
+                this.logException(exc);
                 Environment.Exit(1);
             }
         }
 
+        protected override void OnStop()
+        {
+            this.server.Close();
+            this.serviceTimer.Stop();
+            this.serviceTimer = null;
+        }
+
         private void DoWork(object sender, System.Timers.ElapsedEventArgs e)
         {
+            this.debug("Doing work");
             /*
             try
             {
@@ -164,11 +194,6 @@ namespace Psistats.Service
              * */
         }
 
-        protected override void OnStop()
-        {
-            this.server.Close();
-            this.serviceTimer.Stop();
-            this.serviceTimer = null;
-        }
+
     }
 }
