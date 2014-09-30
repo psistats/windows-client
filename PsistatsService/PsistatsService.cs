@@ -6,7 +6,8 @@ namespace Psistats.Service
 {
     class PsistatsService : ServiceBase, IDisposable
     {
-        private System.Timers.Timer serviceTimer;
+        private System.Timers.Timer primaryTimer;
+        private System.Timers.Timer secondaryTimer;
 
         private Stat stat;
         private Psistats.MessageQueue.Server server;
@@ -99,10 +100,15 @@ namespace Psistats.Service
                 this.server.Connect();
                 this.server.Bind(this.stat.hostname);
 
-                this.serviceTimer = new System.Timers.Timer(conf.primary_timer * 1000);
-                this.serviceTimer.AutoReset = true;
-                this.serviceTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.DoWork);
-                this.serviceTimer.Start();
+                this.primaryTimer = new System.Timers.Timer(conf.primary_timer * 1000);
+                this.primaryTimer.AutoReset = true;
+                this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.primaryWorker);
+                this.primaryTimer.Start();
+
+                this.secondaryTimer = new System.Timers.Timer(conf.secondary_timer * 1000);
+                this.secondaryTimer.AutoReset = true;
+                this.secondaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.secondaryWorker);
+                this.secondaryTimer.Start();
             }
             catch (Exception exc)
             {
@@ -115,17 +121,17 @@ namespace Psistats.Service
         {
             this.EventLog.WriteEntry("Stopping service");
 
-            this.serviceTimer.Stop();
-            this.serviceTimer = null;
+            this.primaryTimer.Stop();
+            this.secondaryTimer.Stop();
 
-            
+            this.primaryTimer = null;
+            this.secondaryTimer = null;
 
             this.server.Close();
         }
 
-        private void DoWork(object sender, System.Timers.ElapsedEventArgs e)
+        private void courier(Psistats.MessageQueue.Message msg)
         {
-
             try
             {
                 if (!server.IsConnected())
@@ -133,10 +139,6 @@ namespace Psistats.Service
                     this.server.Connect();
                     this.server.Bind(this.stat.hostname);
                 }
-
-                Psistats.MessageQueue.Message msg = Psistats.MessageQueue.Message.FromStatObject(this.stat);
-
-                this.EventLog.WriteEntry(Psistats.MessageQueue.Message.ToJson(msg));
 
                 this.server.Send(msg);
             }
@@ -147,7 +149,8 @@ namespace Psistats.Service
                     server.Close();
                 }
 
-                debug(exc.ToString());
+                this.logException(exc);
+
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException exc)
@@ -156,7 +159,8 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                debug(exc.ToString());
+                this.logException(exc);
+
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
             catch (Exception exc)
@@ -165,9 +169,30 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                debug("== UNHANDLED EXCEPTION!!!! ==\r\r" + exc.ToString());
+                this.logException(exc);
+
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
+        }
+
+        private void primaryWorker(object sender, System.Timers.ElapsedEventArgs e)
+        {
+
+            Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
+            msg.Hostname = stat.hostname;
+            msg.Mem = stat.mem;
+            msg.Cpu = stat.cpu;
+            msg.Cpu_temp = stat.cpu_temp;
+            this.courier(msg);
+        }
+
+        private void secondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
+            msg.Hostname = stat.hostname;
+            msg.Uptime = stat.uptime;
+            msg.Ipaddr = stat.ipaddr;
+            this.courier(msg);
         }
     }
 }
