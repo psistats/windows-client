@@ -93,7 +93,7 @@
             this.button_settings.TabIndex = 1;
             this.button_settings.Text = "Settings";
             this.button_settings.UseVisualStyleBackColor = false;
-            this.button_settings.Click += new System.EventHandler(this.button_settings_Click);
+            this.button_settings.Click += new System.EventHandler(this.Button_settings_Click);
             // 
             // button_service
             // 

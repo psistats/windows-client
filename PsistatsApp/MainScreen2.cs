@@ -27,7 +27,7 @@ namespace Psistats.App
             service.Start();
         }
 
-        private void button_settings_Click(object sender, EventArgs e)
+        private void Button_settings_Click(object sender, EventArgs e)
         {
             if (view == null || view.IsDisposed == true)
             {

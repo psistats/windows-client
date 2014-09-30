@@ -214,13 +214,17 @@ namespace Psistats.ServiceUtils
             {
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.AllAccess);
                 if (service == IntPtr.Zero)
+                {
                     throw new ApplicationException("Service not installed.");
+                }
 
                 try
                 {
                     StopService(service);
                     if (!DeleteService(service))
+                    {
                         throw new ApplicationException("Could not delete service " + Marshal.GetLastWin32Error());
+                    }
                 }
                 finally
                 {
@@ -242,7 +246,9 @@ namespace Psistats.ServiceUtils
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.QueryStatus);
 
                 if (service == IntPtr.Zero)
+                {
                     return false;
+                }
 
                 CloseServiceHandle(service);
                 return true;
@@ -262,10 +268,14 @@ namespace Psistats.ServiceUtils
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.AllAccess);
 
                 if (service == IntPtr.Zero)
+                {
                     service = CreateService(scm, serviceName, displayName, ServiceAccessRights.AllAccess, SERVICE_WIN32_OWN_PROCESS, ServiceBootFlag.AutoStart, ServiceError.Normal, fileName, null, IntPtr.Zero, null, null, null);
+                }
 
                 if (service == IntPtr.Zero)
+                {
                     throw new ApplicationException("Failed to install service.");
+                }
 
                 try
                 {
@@ -290,7 +300,9 @@ namespace Psistats.ServiceUtils
             {
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.QueryStatus | ServiceAccessRights.Start);
                 if (service == IntPtr.Zero)
+                {
                     throw new ApplicationException("Could not open service.");
+                }
 
                 try
                 {
@@ -315,7 +327,9 @@ namespace Psistats.ServiceUtils
             {
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.QueryStatus | ServiceAccessRights.Stop);
                 if (service == IntPtr.Zero)
+                {
                     throw new ApplicationException("Could not open service.");
+                }
 
                 try
                 {
@@ -338,7 +352,9 @@ namespace Psistats.ServiceUtils
             StartService(service, 0, 0);
             var changedStatus = WaitForServiceStatus(service, ServiceState.StartPending, ServiceState.Running);
             if (!changedStatus)
+            {
                 throw new ApplicationException("Unable to start service");
+            }
         }
 
         private static void StopService(IntPtr service)
@@ -347,7 +363,9 @@ namespace Psistats.ServiceUtils
             ControlService(service, ServiceControl.Stop, status);
             var changedStatus = WaitForServiceStatus(service, ServiceState.StopPending, ServiceState.Stopped);
             if (!changedStatus)
+            {
                 throw new ApplicationException("Unable to stop service");
+            }
         }
 
         public static ServiceState GetServiceStatus(string serviceName)
@@ -358,7 +376,9 @@ namespace Psistats.ServiceUtils
             {
                 IntPtr service = OpenService(scm, serviceName, ServiceAccessRights.QueryStatus);
                 if (service == IntPtr.Zero)
+                {
                     return ServiceState.NotFound;
+                }
 
                 try
                 {
@@ -379,8 +399,9 @@ namespace Psistats.ServiceUtils
         {
             SERVICE_STATUS status = new SERVICE_STATUS();
 
-            if (QueryServiceStatus(service, status) == 0)
+            if (QueryServiceStatus(service, status) == 0) {
                 throw new ApplicationException("Failed to query service status.");
+            }
 
             return status.dwCurrentState;
         }
@@ -390,7 +411,10 @@ namespace Psistats.ServiceUtils
             SERVICE_STATUS status = new SERVICE_STATUS();
 
             QueryServiceStatus(service, status);
-            if (status.dwCurrentState == desiredStatus) return true;
+            if (status.dwCurrentState == desiredStatus)
+            {
+                return true;
+            }
 
             int dwStartTickCount = Environment.TickCount;
             int dwOldCheckPoint = status.dwCheckPoint;
@@ -410,7 +434,10 @@ namespace Psistats.ServiceUtils
 
                 // Check the status again.
 
-                if (QueryServiceStatus(service, status) == 0) break;
+                if (QueryServiceStatus(service, status) == 0)
+                {
+                    break;
+                }
 
                 if (status.dwCheckPoint > dwOldCheckPoint)
                 {
@@ -434,7 +461,9 @@ namespace Psistats.ServiceUtils
         {
             IntPtr scm = OpenSCManager(null, null, rights);
             if (scm == IntPtr.Zero)
+            {
                 throw new ApplicationException("Could not connect to service control manager.");
+            }
 
             return scm;
         }

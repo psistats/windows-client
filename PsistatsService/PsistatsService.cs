@@ -33,25 +33,25 @@ namespace Psistats.Service
             ServiceBase.Run(new PsistatsService());
         }
 
-        protected string logExcMessage(Exception e)
+        protected string LogExcMessage(Exception e)
         {
             string msg = e.Message;
             msg += "\r" + e.StackTrace;
             if (e.InnerException != null)
             {
                 msg += "\r Caused by: ";
-                msg += this.logExcMessage(e.InnerException);
+                msg += this.LogExcMessage(e.InnerException);
             }
 
             return msg;
         }
 
-        protected void logException(Exception e) {
+        protected void LogException(Exception e) {
 
-            this.EventLog.WriteEntry(this.logExcMessage(e), EventLogEntryType.Error);
+            this.EventLog.WriteEntry(this.LogExcMessage(e), EventLogEntryType.Error);
         }
 
-        protected void debug(String msg)
+        protected void Debug(String msg)
         {
             this.EventLog.WriteEntry(msg, EventLogEntryType.Information);
         }
@@ -102,17 +102,17 @@ namespace Psistats.Service
 
                 this.primaryTimer = new System.Timers.Timer(conf.primary_timer * 1000);
                 this.primaryTimer.AutoReset = true;
-                this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.primaryWorker);
+                this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.PrimaryWorker);
                 this.primaryTimer.Start();
 
                 this.secondaryTimer = new System.Timers.Timer(conf.secondary_timer * 1000);
                 this.secondaryTimer.AutoReset = true;
-                this.secondaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.secondaryWorker);
+                this.secondaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.SecondaryWorker);
                 this.secondaryTimer.Start();
             }
             catch (Exception exc)
             {
-                this.logException(exc);
+                this.LogException(exc);
                 Environment.Exit(1);
             }
         }
@@ -130,7 +130,7 @@ namespace Psistats.Service
             this.server.Close();
         }
 
-        private void courier(Psistats.MessageQueue.Message msg)
+        private void Courier(Psistats.MessageQueue.Message msg)
         {
             try
             {
@@ -149,7 +149,7 @@ namespace Psistats.Service
                     server.Close();
                 }
 
-                this.logException(exc);
+                this.LogException(exc);
 
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
@@ -159,7 +159,7 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                this.logException(exc);
+                this.LogException(exc);
 
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
@@ -169,13 +169,13 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                this.logException(exc);
+                this.LogException(exc);
 
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
         }
 
-        private void primaryWorker(object sender, System.Timers.ElapsedEventArgs e)
+        private void PrimaryWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
 
             Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
@@ -183,16 +183,16 @@ namespace Psistats.Service
             msg.Mem = stat.mem;
             msg.Cpu = stat.cpu;
             msg.Cpu_temp = stat.cpu_temp;
-            this.courier(msg);
+            this.Courier(msg);
         }
 
-        private void secondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
+        private void SecondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
             Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
             msg.Hostname = stat.hostname;
             msg.Uptime = stat.uptime;
             msg.Ipaddr = stat.ipaddr;
-            this.courier(msg);
+            this.Courier(msg);
         }
     }
 }
