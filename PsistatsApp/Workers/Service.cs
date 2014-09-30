@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace Psistats.App.Workers
 {
@@ -24,6 +25,9 @@ namespace Psistats.App.Workers
                 this.form.SetServiceButton(false);
                 this.form.SetTextContent(this.form.service_status_label, "Offline");
             }
+
+            this.form.SetNotificationText(" ");
+                
         }
     }
 
@@ -78,7 +82,8 @@ namespace Psistats.App.Workers
                 Debug.WriteLine(exc.ToString());
                 Debug.WriteLine(exc.Message);
                 Debug.WriteLine(exc.StackTrace);
-                this.SetCompletedMessage("Was not able to start service properly");
+                MessageBox.Show(exc.ToString());
+                this.form.SetNotificationText("Was not able to toggle service.");
             }
         }
     }

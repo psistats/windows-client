@@ -14,7 +14,7 @@ namespace Psistats.Service
             spi.Username = null;
             spi.Password = null;
 
-            si.DisplayName = "Psistats Service";
+            si.DisplayName = "PsistatsService";
             si.StartType = ServiceStartMode.Automatic;
 
             si.ServiceName = "PsistatsService";

@@ -139,12 +139,12 @@
             // 
             // label_notifications
             // 
-            this.label_notifications.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_notifications.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_notifications.Location = new System.Drawing.Point(252, 6);
             this.label_notifications.Name = "label_notifications";
-            this.label_notifications.Size = new System.Drawing.Size(356, 19);
+            this.label_notifications.Size = new System.Drawing.Size(356, 64);
             this.label_notifications.TabIndex = 8;
-            this.label_notifications.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label_notifications.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // MainScreen2
             // 

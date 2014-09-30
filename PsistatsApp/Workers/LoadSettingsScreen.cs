@@ -24,9 +24,6 @@ namespace Psistats.App.Workers
                 Config conf = Config.LoadConf();
                 view.Conf = conf;
 
-
-                Debug.WriteLine("Setting up view");
-
                 view.SetTextContent(view.serverPortNumber, conf.server_port.ToString());
                 view.SetTextContent(view.serverHostname, conf.server_hostname);
                 view.SetTextContent(view.serverUsername, conf.server_username);
@@ -54,12 +51,11 @@ namespace Psistats.App.Workers
                 view.SetTextContent(view.appSecondaryTimer, conf.secondary_timer.ToString());
                 view.ThreadShow(view);
 
-                Debug.WriteLine("Showing view");
                 this.form.SetNotificationText("Confing loaded");
             }
             catch (UnauthorizedAccessException exc)
             {
-                this.form.SetNotificationText("Could not load config file - PERIMISSION DENIED");
+                this.form.SetNotificationText("Could not load config file - PERIMISSION DENIED - " + Config.GetConfigFilePath());
             }
         }
     }

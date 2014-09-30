@@ -34,9 +34,9 @@
             Id="ServiceInstaller"
             Type="ownProcess"
             Vital="yes"
-            Name="Psistats"
-            DisplayName="Psistats Client"
-            Description="Psistats client that reports computer vitals to a rabbitmq server"
+            Name="PsistatsService"
+            DisplayName="PsistatsService"
+            Description="Psistats service that reports computer vitals to a rabbitmq server"
             Start="auto"
             Account="LocalSystem"
             ErrorControl="normal"
@@ -50,8 +50,11 @@
         <Component Id="MessageQueueComponent">
           <File Id="MessageQueue" Name="$(var.MessageQueue.TargetFileName)" Source="$(var.MessageQueue.TargetPath)" DiskId="1" />
         </Component>
+        <Component Id="ServiceCLIComponent">
+          <File Id="PsistatsServiceCLI" Name="$(var.PsistatsServiceCLI.TargetFileName)" Source="$(var.PsistatsServiceCLI.TargetPath)" DiskId="1" />
+        </Component>
         <Component Id="ConfigLibComponent" Guid="BCE0E6AC-8799-46D8-8984-EF79B0A0F2D7">
-          <RegistryValue Root="HKLM" Key="SOFTWARE\Psikon\Psistats" Value="[INSTALLFOLDER]psistats.xml" Type="string" Name="config" KeyPath="yes" />
+          <RegistryValue Root="HKLM" Key="SOFTWARE\Psikon\Psistats" Value="[AppDataFolder]\Psikon\Psistats\psistats.xml" Type="string" Name="config" KeyPath="yes" />
         </Component>
       </ComponentGroup>
 
@@ -61,7 +64,7 @@
       </Component>
     
       <Component Id="ProgramFilesCompanyFolderComponent" Directory="ProgramFilesCompanyFolder">
-        <RegistryValue Root="HKCU" Key="Software\Psikon\Psistats" Name="InstallFolder" Value="[INSTALLFOLDER]" Type="string" />
+        <RegistryValue Root="HKCU" Key="Software\Psikon\Psistats" Name="InstallFolder" Value="[AppDataFolder]\Psikon\Psistats" Type="string" />
         <RemoveFolder Id="RemoveProgramFilesCompanyFolder" On="uninstall" />
       </Component>
 

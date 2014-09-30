@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
+using System.Web;
 
 namespace Psistats.ServiceUtils
 {
@@ -23,7 +24,8 @@ namespace Psistats.ServiceUtils
         public static string GetServiceLocation()
         {
             Uri fileUri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-            return System.IO.Path.GetDirectoryName(fileUri.AbsolutePath) + "\\" + Utils.SERVICE_EXE;
+
+            return System.IO.Path.GetDirectoryName(HttpUtility.UrlDecode(fileUri.AbsolutePath)) + "\\" + Utils.SERVICE_EXE;
         }
 
         public static bool IsInstalled()

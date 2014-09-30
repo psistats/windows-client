@@ -7,7 +7,7 @@
     <ProjectGuid>{C99A166F-61E4-488B-AD55-CBF0605B7252}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServiceCLI</RootNamespace>
+    <RootNamespace>Psistats.ServiceCLI</RootNamespace>
     <AssemblyName>PsistatsServiceCLI</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

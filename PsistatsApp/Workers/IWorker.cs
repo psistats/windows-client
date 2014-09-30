@@ -9,7 +9,6 @@ namespace Psistats.App.Workers
     {
         void Start();
         void DoWork(object sender, DoWorkEventArgs e);
-        void Completed(object sender, RunWorkerCompletedEventArgs e);
         BackgroundWorker GetWorker();
     }
 }
