@@ -8,7 +8,7 @@ for /f "skip=2 tokens=2,*" %%A in ('reg.exe query "HKLM\SOFTWARE\Microsoft\MSBui
 IF NOT EXIST %MSBUILDDIR%nul goto MissingMSBuildToolsPath
 IF NOT EXIST %MSBUILDDIR%msbuild.exe goto MissingMSBuildExe
 
-"%MSBUILDDIR%msbuild.exe" PsikonStats.sln /v:d /t:rebuild /p:Configuration=Release
+"%MSBUILDDIR%msbuild.exe" PsikonStats.sln /v:d /t:rebuild /p:Configuration=Debug
 
 
 goto:eof
