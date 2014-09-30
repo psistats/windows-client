@@ -27,13 +27,13 @@ namespace Psistats.App.Workers
 
                 Debug.WriteLine("Setting up view");
 
-                view.SetTextFieldContent(view.serverPortNumber, conf.server_port.ToString());
-                view.SetTextFieldContent(view.serverHostname, conf.server_hostname);
-                view.SetTextFieldContent(view.serverUsername, conf.server_username);
-                view.SetTextFieldContent(view.serverPassword, conf.server_password);
-                view.SetTextFieldContent(view.serverPath, conf.server_vhost);
+                view.SetTextContent(view.serverPortNumber, conf.server_port.ToString());
+                view.SetTextContent(view.serverHostname, conf.server_hostname);
+                view.SetTextContent(view.serverUsername, conf.server_username);
+                view.SetTextContent(view.serverPassword, conf.server_password);
+                view.SetTextContent(view.serverPath, conf.server_vhost);
 
-                view.SetTextFieldContent(view.exchangeName, conf.exchange_name);
+                view.SetTextContent(view.exchangeName, conf.exchange_name);
                 view.SetComboBox(view.exchangeType, conf.exchange_type);
 
                 bool[] exchangeSettings = new bool[2];
@@ -41,8 +41,8 @@ namespace Psistats.App.Workers
                 exchangeSettings[1] = conf.exchange_autodelete;
                 view.SetCheckedListBox(view.exchangeSettings, exchangeSettings);
 
-                view.SetTextFieldContent(view.queueName, conf.queue_prefix);
-                view.SetTextFieldContent(view.queueMessageTTL, conf.queue_ttl.ToString());
+                view.SetTextContent(view.queueName, conf.queue_prefix);
+                view.SetTextContent(view.queueMessageTTL, conf.queue_ttl.ToString());
 
                 bool[] queueSettings = new bool[3];
                 queueSettings[0] = conf.queue_exclusive;
@@ -50,8 +50,8 @@ namespace Psistats.App.Workers
                 queueSettings[2] = conf.queue_autodelete;
                 view.SetCheckedListBox(view.queueSettings, queueSettings);
 
-                view.SetTextFieldContent(view.appMainTimer, conf.app_timer.ToString());
-                view.SetTextFieldContent(view.appSecondaryTimer, conf.metadata_timer.ToString());
+                view.SetTextContent(view.appMainTimer, conf.app_timer.ToString());
+                view.SetTextContent(view.appSecondaryTimer, conf.metadata_timer.ToString());
                 view.ThreadShow(view);
 
                 Debug.WriteLine("Showing view");

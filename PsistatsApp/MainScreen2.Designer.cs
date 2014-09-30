@@ -165,6 +165,7 @@
             this.MaximizeBox = false;
             this.Name = "MainScreen2";
             this.Text = "Psistats";
+            this.Load += new System.EventHandler(this.MainScreen2_Load);
             this.cpu_meter_background.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -174,15 +175,15 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label service_status_label;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label cpu_meter_percentage_label;
         private System.Windows.Forms.Button button_settings;
-        private System.Windows.Forms.Button button_service;
         private System.Windows.Forms.Panel cpu_meter_background;
         private System.Windows.Forms.Panel cpu_meter_bar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label_notifications;
+        public System.Windows.Forms.Label service_status_label;
+        public System.Windows.Forms.Button button_service;
 
 
 

@@ -23,7 +23,7 @@ namespace Psistats.App
 
         public void ResizeExpand(object sender, EventArgs e)
         {
-            Psistats.App.Workers.Service service = new Psistats.App.Workers.Service(this);
+            Psistats.App.Workers.ServiceStarter service = new Psistats.App.Workers.ServiceStarter(this);
             service.Start();
         }
 
@@ -39,12 +39,26 @@ namespace Psistats.App
 
         public void SetNotificationText(string p)
         {
-            this.SetLabelContent(this.label_notifications, p);
+            this.SetTextContent(this.label_notifications, p);
         }
 
-        private void SetTextFieldContent(Label label, string p)
+        public void SetServiceButton(bool started)
         {
-            throw new NotImplementedException();
+            this.ThreadEnable(this.button_service, true);
+
+            var button_text = "Start Service";
+
+            if (started == true)
+            {
+                button_text = "Stop Service";
+            }
+            this.SetTextContent(this.button_service, button_text);
+        }
+
+        private void MainScreen2_Load(object sender, EventArgs e)
+        {
+            var worker = new Psistats.App.Workers.ServiceChecker(this);
+            worker.Start();
         }
     }
 }

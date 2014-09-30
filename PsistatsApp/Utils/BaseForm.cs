@@ -12,11 +12,25 @@ namespace Psistats.App.Utils
         delegate void SetComboBoxCallback(ComboBox control, string text);
         delegate void SetCheckedListBoxCallback(CheckedListBox control, bool[] items);
         delegate void SetWindowHeightCallback(Form control, int height);
-        delegate void SetTextFieldContentCallback(TextBox control, string text);
+        delegate void SetTextContentCallback(Control control, string text);
         delegate void SetLabelContentCallback(Label control, string text);
         delegate void SetVisibleCallback(Control control, bool visible);
         delegate void ThreadShowCallback(Control control);
         delegate void ThreadCloseCallback(Form control);
+        delegate void ThreadEnableCallback(Control control, bool enabled);
+
+        public void ThreadEnable(Control control, bool enabled)
+        {
+            if (control.InvokeRequired)
+            {
+                ThreadEnableCallback d = new ThreadEnableCallback(ThreadEnable);
+                control.Invoke(d, new object[] { control, enabled });
+            }
+            else
+            {
+                control.Enabled = enabled;
+            }
+        }
 
         public void ThreadClose(Form control)
         {
@@ -62,11 +76,11 @@ namespace Psistats.App.Utils
             }
         }
 
-        public void SetTextFieldContent(TextBox control, string text)
+        public void SetTextContent(Control control, string text)
         {
             if (control.InvokeRequired)
             {
-                SetTextFieldContentCallback d = new SetTextFieldContentCallback(SetTextFieldContent);
+                SetTextContentCallback d = new SetTextContentCallback(SetTextContent);
                 control.Invoke(d, new object[] { control, text });
             }
             else
