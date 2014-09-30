@@ -58,7 +58,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.appSecondaryTimer = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.appMainTimer = new System.Windows.Forms.TextBox();
+            this.appPrimaryTimer = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.button_save_settings = new System.Windows.Forms.Button();
@@ -327,7 +327,7 @@
             this.serviceSettingsPanel.Controls.Add(this.label15);
             this.serviceSettingsPanel.Controls.Add(this.appSecondaryTimer);
             this.serviceSettingsPanel.Controls.Add(this.label16);
-            this.serviceSettingsPanel.Controls.Add(this.appMainTimer);
+            this.serviceSettingsPanel.Controls.Add(this.appPrimaryTimer);
             this.serviceSettingsPanel.Controls.Add(this.label17);
             this.serviceSettingsPanel.Controls.Add(this.label18);
             this.serviceSettingsPanel.Location = new System.Drawing.Point(235, 11);
@@ -363,10 +363,10 @@
             // 
             // appMainTimer
             // 
-            this.appMainTimer.Location = new System.Drawing.Point(111, 24);
-            this.appMainTimer.Name = "appMainTimer";
-            this.appMainTimer.Size = new System.Drawing.Size(47, 20);
-            this.appMainTimer.TabIndex = 2;
+            this.appPrimaryTimer.Location = new System.Drawing.Point(111, 24);
+            this.appPrimaryTimer.Name = "appMainTimer";
+            this.appPrimaryTimer.Size = new System.Drawing.Size(47, 20);
+            this.appPrimaryTimer.TabIndex = 2;
             // 
             // label17
             // 
@@ -459,7 +459,7 @@
         public System.Windows.Forms.TextBox exchangeName;
         public System.Windows.Forms.ComboBox exchangeType;
         public System.Windows.Forms.TextBox appSecondaryTimer;
-        public System.Windows.Forms.TextBox appMainTimer;
+        public System.Windows.Forms.TextBox appPrimaryTimer;
 
 
     }

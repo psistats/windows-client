@@ -50,8 +50,8 @@ namespace Psistats.App
         {
             conf.app_cputemp = true;
 
-            conf.app_timer = int.Parse(appMainTimer.Text);
-            conf.metadata_timer = int.Parse(appMainTimer.Text);
+            conf.primary_timer = int.Parse(appPrimaryTimer.Text);
+            conf.secondary_timer = int.Parse(appSecondaryTimer.Text);
 
             conf.exchange_name = exchangeName.Text;
 

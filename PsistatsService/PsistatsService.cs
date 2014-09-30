@@ -8,12 +8,9 @@ namespace Psistats.Service
     {
         private System.Timers.Timer serviceTimer;
 
-        private Logger logger;
         private Stat stat;
         private Psistats.MessageQueue.Server server;
         private Config conf;
-
-        private int metadata_counter = 0;
 
         public PsistatsService()
         {
@@ -58,23 +55,51 @@ namespace Psistats.Service
             this.EventLog.WriteEntry(msg, EventLogEntryType.Information);
         }
 
+        protected void DebugConfig(Config conf)
+        {
+            string msg = "Server Hostname: " + conf.server_hostname + "\r";
+            msg += "Server Post: " + conf.server_port.ToString() + "\r";
+            msg += "Server Username: " + conf.server_username + "\r";
+            msg += "Server Password: " + conf.server_password + "\r";
+            msg += "Server Virtualhost: " + conf.server_vhost + "\r";
+            msg += "\r";
+            msg += "Exchange Name: " + conf.exchange_name + "\r";
+            msg += "Exchange Type: " + conf.exchange_type + "\r";
+            msg += "Exchange Durable: " + conf.exchange_durable.ToString() + "\r";
+            msg += "Exchange AutoDelete: " + conf.exchange_autodelete.ToString() + "\r";
+            msg += "\r";
+            msg += "Queue Prefix: " + conf.queue_prefix + "\r";
+            msg += "Queue Exclusive: " + conf.queue_exclusive.ToString() + "\r";
+            msg += "Queue Durable: " + conf.queue_durable.ToString() + "\r";
+            msg += "Queue AutoDelete: " + conf.queue_autodelete.ToString() + "\r";
+            msg += "Queue TTL: " + conf.queue_ttl.ToString() + "\r";
+            msg += "\r";
+            msg += "App Main Timer: " + conf.primary_timer.ToString() + "\r";
+            msg += "App Secondary Timer: " + conf.secondary_timer.ToString() + "\r";
+
+            this.EventLog.WriteEntry(msg);
+                
+        }
+
         protected override void OnStart(string[] args)
         {
-            this.EventLog.WriteEntry("Starting Psistats Service");
-
             this.stat = new Stat();
+
+            this.EventLog.WriteEntry(stat.hostname);
 
             try
             {
-                //this.conf = Config.LoadConf();
+                this.EventLog.WriteEntry("hostname:" + this.stat.hostname);
+                this.EventLog.WriteEntry("Confing location: " + Config.GetConfigFilePath());
+                conf = Config.LoadConf();
 
-                //this.logger.Debug(this.conf);
+                this.DebugConfig(conf);
 
-                //this.server = new Psistats.MessageQueue.Server(conf);
+                this.server = new Psistats.MessageQueue.Server(conf);
+                this.server.Connect();
+                this.server.Bind(this.stat.hostname);
 
-                //double app_timer = this.conf.app_timer * 1000;
-
-                this.serviceTimer = new System.Timers.Timer(1000);
+                this.serviceTimer = new System.Timers.Timer(conf.primary_timer * 1000);
                 this.serviceTimer.AutoReset = true;
                 this.serviceTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.DoWork);
                 this.serviceTimer.Start();
@@ -88,15 +113,19 @@ namespace Psistats.Service
 
         protected override void OnStop()
         {
-            this.server.Close();
+            this.EventLog.WriteEntry("Stopping service");
+
             this.serviceTimer.Stop();
             this.serviceTimer = null;
+
+            
+
+            this.server.Close();
         }
 
         private void DoWork(object sender, System.Timers.ElapsedEventArgs e)
         {
-            this.debug("Doing work");
-            /*
+
             try
             {
                 if (!server.IsConnected())
@@ -105,63 +134,11 @@ namespace Psistats.Service
                     this.server.Bind(this.stat.hostname);
                 }
 
-                string json;
+                Psistats.MessageQueue.Message msg = Psistats.MessageQueue.Message.FromStatObject(this.stat);
 
-                var json_data = new Dictionary<string, object>();
+                this.EventLog.WriteEntry(Psistats.MessageQueue.Message.ToJson(msg));
 
-                if (this.metadata_counter == this.conf.metadata_timer)
-                {
-                    var ipaddr = new List<string>();
-                    ipaddr.Add(stat.ipaddr);
-
-                    json_data.Add("hostname", stat.hostname);
-                    json_data.Add("ipaddr", ipaddr.ToArray());
-                    json_data.Add("cpu", stat.cpu);
-                    json_data.Add("mem", stat.mem);
-                    json_data.Add("uptime", stat.uptime);
-
-                    if (conf.app_cputemp)
-                    {
-                        json_data.Add("cpu_temp", stat.cpu_temp);
-                    }
-
-                    this.metadata_counter = 0;
-                }
-                else
-                {
-                    json_data.Add("hostname", stat.hostname);
-                    json_data.Add("cpu", stat.cpu);
-                    json_data.Add("mem", stat.mem);
-                    this.metadata_counter += 1;
-                }
-
-                var json_values = new List<string>();
-
-                foreach (string key in json_data.Keys)
-                {
-
-                    if (json_data[key].GetType().Name == "String")
-                    {
-                        json_values.Add("\"" + key + "\": \"" + json_data[key] + "\"");
-                    }
-                    else if (json_data[key].GetType().Name == "String[]")
-                    {
-                        String[] values = (String[])json_data[key];
-                        json_values.Add("\"" + key + "\": [\"" + string.Join(",", values) + "\"]");
-                    }
-                    else if (json_data[key].GetType().Name == "Integer")
-                    {
-                        json_values.Add("\"" + key + "\": " + json_data[key].ToString());
-                    }
-                    else if (json_data[key].GetType().Name == "Double")
-                    {
-                        json_values.Add("\"" + key + "\": " + json_data[key].ToString());
-                    }
-                }
-
-                json = "{" + string.Join(",", json_values.ToArray()) + "}";
-
-                server.SendJson(json);
+                this.server.Send(msg);
             }
             catch (RabbitMQ.Client.Exceptions.ConnectFailureException exc)
             {
@@ -170,7 +147,7 @@ namespace Psistats.Service
                     server.Close();
                 }
 
-                logger.Debug(exc.ToString());
+                debug(exc.ToString());
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException exc)
@@ -179,7 +156,7 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                logger.Debug(exc.ToString());
+                debug(exc.ToString());
                 System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
             catch (Exception exc)
@@ -188,12 +165,9 @@ namespace Psistats.Service
                 {
                     server.Close();
                 }
-                logger.Debug("== UNHANDLED EXCEPTION!!!! ==\r\r" + exc.ToString());
-                System.Threading.Thread.Sleep(30000);
+                debug("== UNHANDLED EXCEPTION!!!! ==\r\r" + exc.ToString());
+                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
             }
-             * */
         }
-
-
     }
 }

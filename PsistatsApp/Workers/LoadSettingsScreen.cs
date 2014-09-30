@@ -50,8 +50,8 @@ namespace Psistats.App.Workers
                 queueSettings[2] = conf.queue_autodelete;
                 view.SetCheckedListBox(view.queueSettings, queueSettings);
 
-                view.SetTextContent(view.appMainTimer, conf.app_timer.ToString());
-                view.SetTextContent(view.appSecondaryTimer, conf.metadata_timer.ToString());
+                view.SetTextContent(view.appPrimaryTimer, conf.primary_timer.ToString());
+                view.SetTextContent(view.appSecondaryTimer, conf.secondary_timer.ToString());
                 view.ThreadShow(view);
 
                 Debug.WriteLine("Showing view");

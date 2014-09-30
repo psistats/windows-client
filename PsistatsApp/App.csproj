@@ -102,18 +102,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DoerBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DoerBox.Designer.cs">
-      <DependentUpon>DoerBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainScreen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainScreen.Designer.cs">
-      <DependentUpon>MainScreen.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainScreen2.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,12 +126,6 @@
     <Compile Include="Workers\LoadSettingsScreen.cs" />
     <Compile Include="Workers\Resizer.cs" />
     <Compile Include="Workers\Service.cs" />
-    <EmbeddedResource Include="DoerBox.resx">
-      <DependentUpon>DoerBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainScreen.resx">
-      <DependentUpon>MainScreen.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainScreen2.resx">
       <DependentUpon>MainScreen2.cs</DependentUpon>
     </EmbeddedResource>

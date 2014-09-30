@@ -49,8 +49,8 @@ namespace Psistats
             msg += "Queue Durable: " + conf.queue_durable + "\r";
             msg += "Queue TTL: " + conf.queue_ttl.ToString() + "\r";
 
-            msg += "App Timer: " + conf.app_timer.ToString() + "\r";
-            msg += "Meta Timer: " + conf.metadata_timer.ToString() + "\r";
+            msg += "App Timer: " + conf.primary_timer.ToString() + "\r";
+            msg += "Meta Timer: " + conf.secondary_timer.ToString() + "\r";
             msg += "Retry Timer: " + conf.retry_timer.ToString() + "\r";
 
             Debug(msg);

@@ -17,20 +17,20 @@ namespace Psistats.MessageQueue
 
         private string queue_name;
 
-        public Server(Config conf)
+        public Server(Config config)
         {
-            this.conf = conf;
+            if (config == null)
+            {
+                throw new ArgumentNullException("config can't be null");
+            }
+            this.conf = config;
         }
 
         public bool IsConnected()
         {
-            if (conn != null)
+            if (conn.IsOpen)
             {
-                if (conn.IsOpen)
-                {
-                    return true;
-                }
-                return false;
+                return true;
             }
             return false;
         }
@@ -92,7 +92,7 @@ namespace Psistats.MessageQueue
             channel.QueueDelete(queue_name);
         }
 
-        public void SendJson(string msg)
+        public void Send(string msg)
         {
             IBasicProperties p = channel.CreateBasicProperties();
             p.DeliveryMode = 2;
@@ -101,6 +101,11 @@ namespace Psistats.MessageQueue
 
             byte[] bytes = Encoding.Default.GetBytes(msg);
             channel.BasicPublish(conf.exchange_name, queue_name, p, bytes);
+        }
+
+        public void Send(Message msg)
+        {
+            this.Send(Message.ToJson(msg));
         }
 
         public void Close()

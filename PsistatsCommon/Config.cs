@@ -30,8 +30,8 @@ namespace Psistats
         public bool queue_autodelete = true;
         public int queue_ttl = 10000;
 
-        public int app_timer = 1;
-        public int metadata_timer = 5;
+        public int primary_timer = 1;
+        public int secondary_timer = 5;
         public int retry_timer = 5;
         public bool app_cputemp = true;
 
@@ -45,9 +45,8 @@ namespace Psistats
 
             string keyname = root + "\\" + path;
 
-            string default_conf = Environment.SpecialFolder.CommonApplicationData + "\\psistats.conf";
-
-            Debug.WriteLine("Config file: " + default_conf);
+            Uri fileUri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+            string default_conf = System.IO.Path.GetDirectoryName(fileUri.AbsolutePath) + "\\psistats.conf";
 
             string conf_file = (string)Registry.GetValue(keyname, key, default_conf);
 

@@ -19,6 +19,12 @@ namespace Psistats.ServiceCLI
                 {
                     if (args[0] == "install")
                     {
+                        if (Utils.IsInstalled())
+                        {
+                            Console.WriteLine("Uninstalling previous service");
+                            Utils.UninstallService();
+                        }
+
                         Utils.InstallAndStart();
                         Console.WriteLine("Service installed!");
                     }
@@ -37,8 +43,8 @@ namespace Psistats.ServiceCLI
                         Console.WriteLine(e.InnerException.ToString());
                     }
                     Console.WriteLine(" ");
-                    Console.WriteLine("Press any key to continue, and again, sorry for that...");
-                    Console.Read();
+                    Console.WriteLine("Press enter to continue, and again, sorry for that...");
+                    string output = Console.ReadLine();
                     exitCode = 1;
                 }
 
@@ -46,6 +52,9 @@ namespace Psistats.ServiceCLI
             else
             {
                 Console.WriteLine("What was it I was supposed to do again?");
+                Console.WriteLine(" ");
+                Console.WriteLine("Press any key to continue...");
+                Console.Read();
                 exitCode = 2;
             }
 

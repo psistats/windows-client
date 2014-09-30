@@ -14,7 +14,7 @@ namespace Psistats
 {
     public class Stat
     {
-        private List<String> _ipaddr = null;
+        private List<String> _ipaddr = new List<String>();
         private string _hostname = null;
 
         private PerformanceCounter cpuCounter;

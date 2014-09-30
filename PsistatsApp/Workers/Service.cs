@@ -36,10 +36,26 @@ namespace Psistats.App.Workers
 
         public override void DoWork(object sender, DoWorkEventArgs e)
         {
-            this.form.SetNotificationText("Attempting to start service");
+
+
+
+            
 
             try
             {
+
+                string arg;
+
+                if (Psistats.ServiceUtils.Utils.IsRunning() == true)
+                {
+                    arg = "uninstall";
+                }
+                else
+                {
+                    arg = "install";
+                }
+
+
                 Process process = null;
                 ProcessStartInfo processStartInfo = new ProcessStartInfo();
 
@@ -48,7 +64,7 @@ namespace Psistats.App.Workers
                 processStartInfo.Verb = "runas";
                 processStartInfo.WindowStyle = ProcessWindowStyle.Normal;
                 processStartInfo.UseShellExecute = true;
-                processStartInfo.Arguments = "install";
+                processStartInfo.Arguments = arg;
 
                 process = Process.Start(processStartInfo);
                 process.WaitForExit();

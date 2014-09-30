@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration.Install;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading;
@@ -17,6 +18,12 @@ namespace Psistats.ServiceUtils
         public static ServiceController GetServiceController()
         {
             return ServiceController.GetServices().FirstOrDefault(s => s.ServiceName == Utils.SERVICE_NAME);
+        }
+
+        public static string GetServiceLocation()
+        {
+            Uri fileUri = new Uri(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
+            return System.IO.Path.GetDirectoryName(fileUri.AbsolutePath) + "\\" + Utils.SERVICE_EXE;
         }
 
         public static bool IsInstalled()
@@ -41,7 +48,14 @@ namespace Psistats.ServiceUtils
         {
             if (!Utils.IsInstalled())
             {
-                ServiceUtils.InstallAndStart(Utils.SERVICE_NAME, "Psistats Service", Utils.SERVICE_EXE);
+                try
+                {
+                    ServiceUtils.InstallAndStart(Utils.SERVICE_NAME, "Psistats Service", Utils.GetServiceLocation());
+                }
+                catch (ApplicationException exc)
+                {
+                    throw new InstallFailedException("Failed to install the service. The reason may be in the event logs", exc);
+                }
             }
         }
 
@@ -49,7 +63,14 @@ namespace Psistats.ServiceUtils
         {
             if (!Utils.IsRunning())
             {
-                ServiceUtils.StartService(Utils.SERVICE_NAME);
+                try
+                {
+                    ServiceUtils.StartService(Utils.SERVICE_NAME);
+                }
+                catch (ApplicationException exc)
+                {
+                    throw new StartFailedException("Failed to start the service. The reason may be in the event logs", exc);
+                }
             }
         }
 
@@ -61,12 +82,27 @@ namespace Psistats.ServiceUtils
 
         public static void UninstallService()
         {
-            ServiceUtils.Uninstall(Utils.SERVICE_NAME);
+            try
+            {
+                ServiceUtils.Uninstall(Utils.SERVICE_NAME);
+            }
+            catch (ApplicationException exc)
+            {
+                throw new UninstallFailedException("Failed to uninstall the service. The reason may be in the event logs", exc);
+            }
+
         }
 
         public static void StopService()
         {
-            ServiceUtils.StopService(Utils.SERVICE_NAME);
+            try
+            {
+                ServiceUtils.StopService(Utils.SERVICE_NAME);
+            }
+            catch (ApplicationException exc)
+            {
+                throw new StopFailedException("Failed to stop the service. The reason may be in the event logs", exc);
+            }
         }
 
         public static void StopAndUninstall()
@@ -74,6 +110,33 @@ namespace Psistats.ServiceUtils
             Utils.StopService();
             Utils.UninstallService();
         }
+    }
+
+    public class InstallFailedException : System.SystemException
+    {
+        public InstallFailedException(string p, ApplicationException exc) : base(p, exc) {}
+        public InstallFailedException(string p) : base(p) { }
+        public InstallFailedException(SerializationInfo si, StreamingContext sc) : base(si, sc) { }
+        public InstallFailedException() : base() { }
+    }
+
+    public class StartFailedException : System.SystemException {
+        public StartFailedException(string p, ApplicationException exc) : base(p, exc) {}
+        public StartFailedException(string p) : base(p) { }
+        public StartFailedException(SerializationInfo si, StreamingContext sc) : base(si, sc) { }
+        public StartFailedException() : base() { }    
+    }
+    public class UninstallFailedException : System.SystemException { 
+        public UninstallFailedException(string p, ApplicationException exc) : base(p, exc) {}
+        public UninstallFailedException(string p) : base(p) { }
+        public UninstallFailedException(SerializationInfo si, StreamingContext sc) : base(si, sc) { }
+        public UninstallFailedException() : base() { }    
+    }
+    public class StopFailedException : System.SystemException { 
+        public StopFailedException(string p, ApplicationException exc) : base(p, exc) {}
+        public StopFailedException(string p) : base(p) { }
+        public StopFailedException(SerializationInfo si, StreamingContext sc) : base(si, sc) { }
+        public StopFailedException() : base() { }    
     }
 
     /**
