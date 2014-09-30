@@ -116,7 +116,6 @@
     <Compile Include="SettingsScreen.Designer.cs">
       <DependentUpon>SettingsScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
     <Compile Include="Utils\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
