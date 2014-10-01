@@ -47,14 +47,38 @@ def set_manifest_version(version):
             new_file = []
             for line in f.readlines():
                 results = re.search("assemblyIdentity version\=\"([\.0-9]+)\"", line)
-                
+
                 if results != None:
-                    line = line.replace(results.group[0], version)
+                    line = line.replace(results.group(0), version)
                 new_file.append(line)
         
         with open(name, "w") as f:
             f.write("".join(new_file))
 
+def set_version_wxs_file(version):
+    files = [
+        "Bootstrapper/Bundle.wxs",
+        "Psistats.Installer/Product.wxs"
+    ]
+    
+    for file in files:
+        with open(file) as f:
+            print "Working on " + file
+            new_file = []
+            for line in f.readlines():
+                results = re.search("Version\=\"([\.0-9]+)\"", line)
+                
+                if results != None:
+                    print results.group(1)
+                    line = line.replace(results.group(1), version)
+                    print line
+                new_file.append(line)
+                
+        
+        with open(file, "w") as f:
+            f.write("".join(new_file))
+            
 set_manifest_version(NEW_VERSION)
 set_version_file(NEW_VERSION)        
 set_assemblyinfo_version(NEW_VERSION)
+set_version_wxs_file(NEW_VERSION)
