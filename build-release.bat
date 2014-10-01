@@ -1,4 +1,7 @@
 @echo off
+call python build-removedev.py
+if errorlevel 1 goto failed
+
 
 call python build-changeversion.py %1
 if errorlevel 1 goto failed
