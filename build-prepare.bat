@@ -9,6 +9,8 @@ if errorlevel 1 goto failed
 call build.bat release
 if errorlevel 1 goto failed
 
+goto:eof
+
 :failed
 echo "[ERROR] Failed"
-goto eof
+goto:eof
