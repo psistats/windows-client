@@ -40,5 +40,21 @@ def set_version_file(version):
     with open("VERSION", "w") as f:
         f.write(version)
         
+def set_manifest_version(version):
+    for name in glob.glob("./*/app.manifest"):
+        with open(name) as f:
+            print "Working on " + name
+            new_file = []
+            for line in f.readlines():
+                results = re.search("assemblyIdentity version\=\"([\.0-9]+)\"", line)
+                
+                if results != None:
+                    line = line.replace(results.group[0], version)
+                new_file.append(line)
+        
+        with open(name, "w") as f:
+            f.write("".join(new_file))
+
+set_manifest_version(NEW_VERSION)
 set_version_file(NEW_VERSION)        
 set_assemblyinfo_version(NEW_VERSION)
