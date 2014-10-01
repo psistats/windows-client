@@ -13,8 +13,7 @@ print VERSION
 
 def set_assemblyinfo_version(version):
 
-    aLineRe = "AssemblyVersion|AssemblyFileVersion\(\"([\.0-9]+)\"\)"
-    aVersionRe = "(\d\.\d\.\d)"
+    aLineRe = "[AssemblyVersion|AssemblyFileVersion]\(\"([\.0-9]+)\"\)"
     
     print "Changing version numbers in AssemblyInfo.cs files"
     
@@ -26,10 +25,11 @@ def set_assemblyinfo_version(version):
         with open(name) as f:
             for line in f.readlines():
                 if line.startswith("//") != True:
-                    reProg = re.compile(aLineRe)
-                    result = reProg.search(line)
-                    if (result != None):
-                        line = re.sub(aVersionRe, NEW_VERSION, line)
+                    results = re.search(aLineRe, line)
+                    if (results != None):
+                        print results.groups()
+                        line = line.replace(results.group(1), version)
+                        print line
                 new_file.append(line)
         
         with open(name, "w") as f:
@@ -49,7 +49,7 @@ def set_manifest_version(version):
                 results = re.search("assemblyIdentity version\=\"([\.0-9]+)\"", line)
 
                 if results != None:
-                    line = line.replace(results.group(0), version)
+                    line = line.replace(results.group(1), version)
                 new_file.append(line)
         
         with open(name, "w") as f:
@@ -77,8 +77,25 @@ def set_version_wxs_file(version):
         
         with open(file, "w") as f:
             f.write("".join(new_file))
-            
+ 
+def set_csproj_file(version):
+    files = [
+        "PsistatsApp/App.csproj"
+    ]
+    
+    for name in files:
+        with open(name) as f:
+            print "Working on " + name
+            new_file = []
+            for line in f.readlines():
+                results = re.search("\<ApplicationVersion\>([\.0-9]+)\<\/ApplicationVersion\>", line)
+                if results != None:
+                    line = line.replace(results.group(1), version)
+                    print line
+                new_file.append(line)
+                
 set_manifest_version(NEW_VERSION)
 set_version_file(NEW_VERSION)        
 set_assemblyinfo_version(NEW_VERSION)
 set_version_wxs_file(NEW_VERSION)
+set_csproj_file(NEW_VERSION)
