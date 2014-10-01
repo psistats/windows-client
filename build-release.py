@@ -35,4 +35,10 @@ def set_assemblyinfo_version(version):
         with open(name, "w") as f:
             f.write("".join(new_file))
             
+def set_version_file(version):
+    print "Working on VERSION file"
+    with open("VERSION", "w") as f:
+        f.write(version)
+        
+set_version_file(NEW_VERSION)        
 set_assemblyinfo_version(NEW_VERSION)
