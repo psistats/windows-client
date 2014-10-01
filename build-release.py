@@ -66,7 +66,7 @@ def set_version_wxs_file(version):
             print "Working on " + file
             new_file = []
             for line in f.readlines():
-                results = re.search("Version\=\"([\.0-9]+)\"", line)
+                results = re.search("\sVersion\=\"([\.0-9]+)\"", line)
                 
                 if results != None:
                     print results.group(1)
