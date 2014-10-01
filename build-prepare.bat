@@ -11,3 +11,4 @@ if errorlevel 1 goto failed
 
 :failed
 echo "[ERROR] Failed"
+goto eof
