@@ -15,8 +15,6 @@ def set_assemblyinfo_version(version):
 
     aLineRe = "[AssemblyVersion|AssemblyFileVersion]\(\"([\.0-9]+)\"\)"
     
-    print "Changing version numbers in AssemblyInfo.cs files"
-    
     for name in glob.glob("./*/Properties/AssemblyInfo.cs"):
         print "Working on " + name
         
@@ -27,9 +25,8 @@ def set_assemblyinfo_version(version):
                 if line.startswith("//") != True:
                     results = re.search(aLineRe, line)
                     if (results != None):
-                        print results.groups()
                         line = line.replace(results.group(1), version)
-                        print line
+                        
                 new_file.append(line)
         
         with open(name, "w") as f:
@@ -50,6 +47,7 @@ def set_manifest_version(version):
 
                 if results != None:
                     line = line.replace(results.group(1), version)
+                    
                 new_file.append(line)
         
         with open(name, "w") as f:
@@ -69,9 +67,8 @@ def set_version_wxs_file(version):
                 results = re.search("\sVersion\=\"([\.0-9]+)\"", line)
                 
                 if results != None:
-                    print results.group(1)
                     line = line.replace(results.group(1), version)
-                    print line
+                    
                 new_file.append(line)
                 
         
@@ -91,7 +88,7 @@ def set_csproj_file(version):
                 results = re.search("\<ApplicationVersion\>([\.0-9]+)\<\/ApplicationVersion\>", line)
                 if results != None:
                     line = line.replace(results.group(1), version)
-                    print line
+                    
                 new_file.append(line)
                 
 set_manifest_version(NEW_VERSION)
