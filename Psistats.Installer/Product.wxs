@@ -5,7 +5,7 @@
 
 
 
-  <Product Id="*" Name="Psistats" Language="1033" Version="0.0.4" Manufacturer="Psikon" UpgradeCode="5f5a71c7-cbeb-4e61-967c-4a44936beb3c">
+  <Product Id="*" Name="Psistats" Language="1033" Version="0.0.5" Manufacturer="Psikon" UpgradeCode="5f5a71c7-cbeb-4e61-967c-4a44936beb3c">
     <Package Id="*" Keywords="Installer" Description="Psikon Presents: Psistats Monitoring System" Manufacturer="Psikon" InstallerVersion="200" Compressed="no" InstallScope="perMachine" />
 
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
