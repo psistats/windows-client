@@ -41,7 +41,7 @@ def set_sonar_file(version):
     with open("sonar-project.properties") as f:
         new_file = []
         for line in f.readlines():
-            results = re.search("sonar\.projectVersion\=([\.0-9]+)")
+            results = re.search("sonar\.projectVersion\=([\.0-9]+)", line)
             if (results != None):
                 line = line.replace(results.group(1), version + "-dev")
             new_file.append(line)
