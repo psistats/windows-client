@@ -9,5 +9,11 @@ if errorlevel 1 goto failed
 git commit -am "Changing version to %1"
 if errorlevel 1 goto failed
 
+git push
+if errorlevel 1 goto failed
+
+goto:eof
+
 :failed
-echo Failed release build
+echo [ERROR] Failed release build
+goto:eof
