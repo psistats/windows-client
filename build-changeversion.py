@@ -35,7 +35,19 @@ def set_assemblyinfo_version(version):
 def set_version_file(version):
     print "Working on VERSION file"
     with open("VERSION", "w") as f:
-        f.write(version)
+        f.write(version + "-dev")
+        
+def set_sonar_file(version):
+    with open("sonar-project.properties") as f:
+        new_file = []
+        for line in f.readlines():
+            results = re.search("sonar\.projectVersion\=([\.0-9]+)")
+            if (results != None):
+                line = line.replace(results.group(1), version + "-dev")
+            new_file.append(line)
+    
+    with open("sonar-project.properties", "w") as f:
+        f.write("".join(new_file))
         
 def set_manifest_version(version):
     for name in glob.glob("./*/app.manifest"):
@@ -96,3 +108,4 @@ set_version_file(NEW_VERSION)
 set_assemblyinfo_version(NEW_VERSION)
 set_version_wxs_file(NEW_VERSION)
 set_csproj_file(NEW_VERSION)
+set_sonar_file(NEW_VERSION)

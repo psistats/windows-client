@@ -1,13 +1,13 @@
 @echo off
-
-call python build-changeversion.py %1
+call python build-removedev.py
 if errorlevel 1 goto failed
 
+git commit -am "Removing dev from version numbers"
 call build.bat debug
 if errorlevel 1 goto failed
 
-git commit -am "Changing version to %1"
+call build.bat release
 if errorlevel 1 goto failed
 
 :failed
-echo Failed release build
+echo "[ERROR] Failed"
