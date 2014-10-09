@@ -13,6 +13,8 @@ namespace Psistats.Service
         private Psistats.MessageQueue.Server server;
         private Config conf;
 
+        private int SecondaryCount = 0;
+
         public PsistatsService()
         {
             this.ServiceName = "PsistatsService";
@@ -105,10 +107,6 @@ namespace Psistats.Service
                 this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.PrimaryWorker);
                 this.primaryTimer.Start();
 
-                this.secondaryTimer = new System.Timers.Timer(conf.secondary_timer * 1000);
-                this.secondaryTimer.AutoReset = true;
-                this.secondaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.SecondaryWorker);
-                this.secondaryTimer.Start();
             }
             catch (Exception exc)
             {
@@ -184,6 +182,16 @@ namespace Psistats.Service
             msg.Cpu = stat.cpu;
             msg.Cpu_temp = stat.cpu_temp;
             this.Courier(msg);
+
+            if (this.SecondaryCount == this.conf.secondary_timer)
+            {
+                this.SecondaryWorker(sender, e);
+                this.SecondaryCount = 1;
+            }
+            else
+            {
+                this.SecondaryCount++;
+            }
         }
 
         private void SecondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
