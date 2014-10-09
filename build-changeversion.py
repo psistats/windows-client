@@ -1,6 +1,7 @@
 import sys
 import glob
 import re
+import os
 
 NEW_VERSION = sys.argv[1]
 
@@ -8,8 +9,8 @@ with open('VERSION') as f:
     VERSION=f.read()
     
 
-print NEW_VERSION
-print VERSION
+print "[INFO] Changing from %s to %s" % (VERSION, NEW_VERSION)
+
 
 def set_assemblyinfo_version(version):
 
@@ -35,7 +36,7 @@ def set_assemblyinfo_version(version):
 def set_version_file(version):
     print "Working on VERSION file"
     with open("VERSION", "w") as f:
-        f.write(version + "-dev")
+        f.write(version)
         
 def set_sonar_file(version):
     with open("sonar-project.properties") as f:
@@ -43,7 +44,7 @@ def set_sonar_file(version):
         for line in f.readlines():
             results = re.search("sonar\.projectVersion\=([\.0-9]+)", line)
             if (results != None):
-                line = line.replace(results.group(1), version + "-dev")
+                line = line.replace(results.group(1), version)
             new_file.append(line)
     
     with open("sonar-project.properties", "w") as f:
