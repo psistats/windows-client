@@ -10,6 +10,7 @@ namespace Psistats.App.Utils
     public partial class BaseForm : Form
     {
         delegate void SetComboBoxCallback(ComboBox control, string text);
+        delegate void SetCheckBoxCallback(CheckBox control, bool value);
         delegate void SetCheckedListBoxCallback(CheckedListBox control, bool[] items);
         delegate void SetWindowHeightCallback(Form control, int height);
         delegate void SetTextContentCallback(Control control, string text);
@@ -60,6 +61,19 @@ namespace Psistats.App.Utils
             }
         }
 
+        public void SetCheckBox(CheckBox control, bool value)
+        {
+            if (control.InvokeRequired)
+            {
+                SetCheckBoxCallback d = new SetCheckBoxCallback(SetCheckBox);
+                control.Invoke(d, new object[] { control, value });
+            }
+            else
+            {
+                control.Checked = value;
+            }
+        }
+        
         public void SetCheckedListBox(CheckedListBox control, bool[] items)
         {
             if (control.InvokeRequired)

@@ -49,6 +49,7 @@ namespace Psistats.App.Workers
 
                 view.SetTextContent(view.appPrimaryTimer, conf.primary_timer.ToString());
                 view.SetTextContent(view.appSecondaryTimer, conf.secondary_timer.ToString());
+                view.SetCheckBox(view.debug_enabled, conf.debug_enabled);
                 view.ThreadShow(view);
 
                 this.form.SetNotificationText("Confing loaded");

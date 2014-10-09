@@ -33,6 +33,7 @@ namespace Psistats
         public int primary_timer = 1;
         public int secondary_timer = 5;
         public int retry_timer = 5;
+        public bool debug_enabled = false;
         public bool app_cputemp = true;
 
         public Config() { }

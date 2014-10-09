@@ -55,13 +55,14 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.serviceSettingsPanel = new System.Windows.Forms.Panel();
-            this.label15 = new System.Windows.Forms.Label();
             this.appSecondaryTimer = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.appPrimaryTimer = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.button_save_settings = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.debug_enabled = new System.Windows.Forms.CheckBox();
             this.serverSettingsPanel.SuspendLayout();
             this.queueSettingsPanel.SuspendLayout();
             this.exchangeSettingsPanel.SuspendLayout();
@@ -324,7 +325,8 @@
             // serviceSettingsPanel
             // 
             this.serviceSettingsPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.serviceSettingsPanel.Controls.Add(this.label15);
+            this.serviceSettingsPanel.Controls.Add(this.debug_enabled);
+            this.serviceSettingsPanel.Controls.Add(this.label1);
             this.serviceSettingsPanel.Controls.Add(this.appSecondaryTimer);
             this.serviceSettingsPanel.Controls.Add(this.label16);
             this.serviceSettingsPanel.Controls.Add(this.appPrimaryTimer);
@@ -334,16 +336,6 @@
             this.serviceSettingsPanel.Name = "serviceSettingsPanel";
             this.serviceSettingsPanel.Size = new System.Drawing.Size(217, 183);
             this.serviceSettingsPanel.TabIndex = 15;
-            // 
-            // label15
-            // 
-            this.label15.Location = new System.Drawing.Point(3, 68);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(199, 109);
-            this.label15.TabIndex = 11;
-            this.label15.Text = "Timers are in seconds.\r\n\r\nThe main timer controls how often CPU and memory usage " +
-    "and cpu temperature are reported.\r\n\r\nThe secondary timer controls how often upti" +
-    "me and IP addresses are reported.";
             // 
             // appSecondaryTimer
             // 
@@ -361,10 +353,10 @@
             this.label16.TabIndex = 9;
             this.label16.Text = "Secondary Timer:";
             // 
-            // appMainTimer
+            // appPrimaryTimer
             // 
             this.appPrimaryTimer.Location = new System.Drawing.Point(111, 24);
-            this.appPrimaryTimer.Name = "appMainTimer";
+            this.appPrimaryTimer.Name = "appPrimaryTimer";
             this.appPrimaryTimer.Size = new System.Drawing.Size(47, 20);
             this.appPrimaryTimer.TabIndex = 2;
             // 
@@ -395,6 +387,24 @@
             this.button_save_settings.Text = "Save Settings";
             this.button_save_settings.UseVisualStyleBackColor = true;
             this.button_save_settings.Click += new System.EventHandler(this.button_save_settings_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(63, 70);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(42, 13);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Debug:";
+            // 
+            // debug_enabled
+            // 
+            this.debug_enabled.AutoSize = true;
+            this.debug_enabled.Location = new System.Drawing.Point(111, 70);
+            this.debug_enabled.Name = "debug_enabled";
+            this.debug_enabled.Size = new System.Drawing.Size(15, 14);
+            this.debug_enabled.TabIndex = 12;
+            this.debug_enabled.UseVisualStyleBackColor = true;
             // 
             // SettingsScreen
             // 
@@ -445,7 +455,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Button button_save_settings;
         public System.Windows.Forms.TextBox serverHostname;
         public System.Windows.Forms.TextBox serverPath;
@@ -460,6 +469,8 @@
         public System.Windows.Forms.ComboBox exchangeType;
         public System.Windows.Forms.TextBox appSecondaryTimer;
         public System.Windows.Forms.TextBox appPrimaryTimer;
+        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.CheckBox debug_enabled;
 
 
     }

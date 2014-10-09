@@ -75,6 +75,7 @@ namespace Psistats.App
             conf.server_password = serverPassword.Text;
 
             conf.retry_timer = 5;
+            conf.debug_enabled = debug_enabled.Checked;
 
 
             Psistats.App.Workers.ConfigSaver worker = new Psistats.App.Workers.ConfigSaver(this.mainScreen, conf);

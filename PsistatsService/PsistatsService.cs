@@ -88,15 +88,15 @@ namespace Psistats.Service
         {
             this.stat = new Stat();
 
-            // this.EventLog.WriteEntry(stat.hostname);
-
             try
             {
-                this.EventLog.WriteEntry("hostname:" + this.stat.hostname);
-                this.EventLog.WriteEntry("Confing location: " + Config.GetConfigFilePath());
+                
                 conf = Config.LoadConf();
 
-                // this.DebugConfig(conf);
+                if (this.conf.debug_enabled)
+                {
+                    this.DebugConfig(conf);
+                }
 
                 this.server = new Psistats.MessageQueue.Server(conf);
                 this.server.Connect();
@@ -120,10 +120,7 @@ namespace Psistats.Service
             this.EventLog.WriteEntry("Stopping service");
 
             this.primaryTimer.Stop();
-            this.secondaryTimer.Stop();
-
             this.primaryTimer = null;
-            this.secondaryTimer = null;
 
             this.server.Close();
         }
@@ -136,6 +133,11 @@ namespace Psistats.Service
                 {
                     this.server.Connect();
                     this.server.Bind(this.stat.hostname);
+                }
+
+                if (this.conf.debug_enabled)
+                {
+                    this.Debug(Psistats.MessageQueue.Message.ToJson(msg));
                 }
 
                 this.server.Send(msg);
@@ -175,22 +177,28 @@ namespace Psistats.Service
 
         private void PrimaryWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
-
-            Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
-            msg.Hostname = stat.hostname;
-            msg.Mem = stat.mem;
-            msg.Cpu = stat.cpu;
-            msg.Cpu_temp = stat.cpu_temp;
-            this.Courier(msg);
-
-            if (this.SecondaryCount == this.conf.secondary_timer)
+            try
             {
-                this.SecondaryWorker(sender, e);
-                this.SecondaryCount = 1;
+                Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
+                msg.Hostname = stat.hostname;
+                msg.Mem = stat.mem;
+                msg.Cpu = stat.cpu;
+                msg.Cpu_temp = stat.cpu_temp;
+                this.Courier(msg);
+
+                if (this.SecondaryCount == this.conf.secondary_timer)
+                {
+                    this.SecondaryWorker(sender, e);
+                    this.SecondaryCount = 1;
+                }
+                else
+                {
+                    this.SecondaryCount++;
+                }
             }
-            else
+            catch (Exception exc)
             {
-                this.SecondaryCount++;
+                this.LogException(exc);
             }
         }
 
