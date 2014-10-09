@@ -17,6 +17,8 @@ namespace Psistats.Service
             si.DisplayName = "PsistatsService";
             si.StartType = ServiceStartMode.Automatic;
 
+            si.ServicesDependedOn = new string[] { "winmgmt" };
+
             si.ServiceName = "PsistatsService";
 
             this.Installers.Add(spi);
