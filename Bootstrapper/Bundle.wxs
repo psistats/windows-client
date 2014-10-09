@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
-	<Bundle Name="Psistats Installer" Version="0.0.7.0" Manufacturer="Psikon" UpgradeCode="1fee5220-dffd-4805-a360-577974c3b64a"
+	<Bundle Name="Psistats Installer" Version="0.0.7.45" Manufacturer="Psikon" UpgradeCode="1fee5220-dffd-4805-a360-577974c3b64a"
           AboutUrl="http://www.psikon.com/"
           >
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
