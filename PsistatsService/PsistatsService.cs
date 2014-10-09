@@ -86,7 +86,7 @@ namespace Psistats.Service
         {
             this.stat = new Stat();
 
-            this.EventLog.WriteEntry(stat.hostname);
+            // this.EventLog.WriteEntry(stat.hostname);
 
             try
             {
@@ -94,7 +94,7 @@ namespace Psistats.Service
                 this.EventLog.WriteEntry("Confing location: " + Config.GetConfigFilePath());
                 conf = Config.LoadConf();
 
-                this.DebugConfig(conf);
+                // this.DebugConfig(conf);
 
                 this.server = new Psistats.MessageQueue.Server(conf);
                 this.server.Connect();
