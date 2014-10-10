@@ -36,14 +36,14 @@ namespace Psistats.Service
             ServiceBase.Run(new PsistatsService());
         }
 
-        protected string LogExcMessage(Exception e)
+        protected string LogExcMessage(Exception exc)
         {
-            string msg = e.Message;
-            msg += "\r" + e.StackTrace;
-            if (e.InnerException != null)
+            string msg = exc.GetType().FullName + ": " + exc.Message;
+            msg += "\r" + exc.StackTrace;
+            if (exc.InnerException != null)
             {
                 msg += "\r Caused by: ";
-                msg += this.LogExcMessage(e.InnerException);
+                msg += this.LogExcMessage(exc.InnerException);
             }
 
             return msg;
