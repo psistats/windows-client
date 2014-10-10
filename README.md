@@ -22,7 +22,7 @@ Uptime is in seconds.
 
 Uptime and IP Addresses are sent at a longer rate than cpu and memory however that rate is configurable.
 
-CPU Temperature is enabled by default, but may not work on all systems. It is reported in degrees celsius.
+CPU Temperature is enabled by default, but may not work on all systems. It is dependent on your motherboard making this information available over WMI.
 
 Installation
 ------------
@@ -48,6 +48,7 @@ Configuration
 ####Service Setings
 * **Main Timer:** The main timer broadcasts the cpu and memory usage, hostname, and cpu temperature. Defaults to 1 second.
 * **Secondary Timer:** The secondary timer broadcastst the hostname, ip addresses, and uptime. Defaults to 5 seconds.
+* **Debug:** If checked, lots of information will be sent to the Event Log. Could potentially reveal passwords.
 
 ####Queue Settings
 * **Name:** The queue prefix to use. The full queue name will be [prefix].[hostname]. Defaults to "psistats"
