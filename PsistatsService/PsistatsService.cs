@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Management;
 using System.ServiceProcess;
 
 namespace Psistats.Service
@@ -49,7 +50,7 @@ namespace Psistats.Service
         }
 
         protected void LogException(Exception e) {
-
+            
             this.EventLog.WriteEntry(this.LogExcMessage(e), EventLogEntryType.Error);
         }
 
@@ -183,7 +184,20 @@ namespace Psistats.Service
                 msg.Hostname = stat.hostname;
                 msg.Mem = stat.mem;
                 msg.Cpu = stat.cpu;
-                msg.Cpu_temp = stat.cpu_temp;
+
+                if (conf.app_cputemp)
+                {
+                    try
+                    {
+                        msg.Cpu_temp = stat.cpu_temp;
+                    }
+                    catch (ManagementException)
+                    {
+                        this.Debug("CPU Temperature not available through WMI");
+                        conf.app_cputemp = false;
+                    }
+                }
+
                 this.Courier(msg);
 
                 if (this.SecondaryCount == this.conf.secondary_timer)
