@@ -50,8 +50,12 @@ namespace Psistats.Service
         }
 
         protected void LogException(Exception e) {
-            
-            this.EventLog.WriteEntry(this.LogExcMessage(e), EventLogEntryType.Error);
+            this.Error(this.LogExcMessage(e));
+        }
+
+        protected void Error(string msg)
+        {
+            this.EventLog.WriteEntry(msg, EventLogEntryType.Error);
         }
 
         protected void Debug(String msg)
@@ -193,7 +197,7 @@ namespace Psistats.Service
                     }
                     catch (ManagementException)
                     {
-                        this.Debug("CPU Temperature not available through WMI");
+                        this.Error("CPU Temperature not available through WMI");
                         conf.app_cputemp = false;
                     }
                 }
