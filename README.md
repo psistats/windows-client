@@ -3,9 +3,9 @@ Psistats Windows Client
 
 .NET client that sends some computer statistics to a RabbitMQ server.
 
-Github: https://github.com/psistats/windows-client
-Builds: http://hq.psikon.net:20020/jenkins/
-Sonar: http://hq.psikon.net:20010/dashboard/index/11
+* Github: https://github.com/psistats/windows-client
+* Builds: http://hq.psikon.net:20020/jenkins/
+* Sonar: http://hq.psikon.net:20010/dashboard/index/11
 
 Message Format
 --------------
@@ -24,7 +24,7 @@ Uptime is in seconds.
 
 Uptime and IP Addresses are sent at a longer rate than cpu and memory however that rate is configurable.
 
-CPU Temperature is enabled by default, but may not work on all systems. It is dependent on your motherboard making this information available over WMI.
+CPU Temperature is enabled by default, but may not work on all systems. It is dependent on your motherboard making this information available over WMI and is not always accurate. Some work will need to be done to better expose CPU temperatures across Intel/AMD chips.
 
 Installation
 ------------
