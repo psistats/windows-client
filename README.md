@@ -42,8 +42,8 @@ Configuration
 
 ####Server Settings
 * **Hostname / IP:** Address of the RabbitMQ server
-* **Port: **Port number of the RabbitMQ server
-* **Path: **Virtual host path
+* **Port:** Port number of the RabbitMQ server
+* **Path:** Virtual host path
 * **Username:** RabbitMQ Username
 * **Password:** RabbitMQ Password
 
