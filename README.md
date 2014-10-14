@@ -9,6 +9,7 @@ Sonar: http://hq.psikon.net:20010/dashboard/index/11
 
 Message Format
 --------------
+```
 {
     "hostname": "my-computer",
     "uptime": 130583.1,
@@ -17,6 +18,7 @@ Message Format
     "ipaddr": ['192.168.1.101','192.168.1.102']
     "cpu_temp": 72.4
 }
+```
 
 Uptime is in seconds.
 
