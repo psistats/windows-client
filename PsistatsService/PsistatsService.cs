@@ -216,7 +216,10 @@ namespace Psistats.Service
                 {
                     try
                     {
-                        msg.Cpu_temp = stat.cpu_temp;
+                        if (stat.cpu_temp != null)
+                        {
+                            msg.Cpu_temp = (double) stat.cpu_temp;
+                        }
                     }
                     catch (ManagementException)
                     {

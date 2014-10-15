@@ -133,7 +133,7 @@ namespace Psistats
             }
         }
 
-        public double cpu_temp
+        public double? cpu_temp
         {
             get
             {
@@ -141,7 +141,12 @@ namespace Psistats
                 hardware.Update();
 
                 var sensor = GetCpuSensor();
-                return System.Convert.ToDouble(sensor.Value);
+                if (sensor != null)
+                {
+                    return System.Convert.ToDouble(sensor.Value);
+                }
+
+                return null;
             }
         }
 
