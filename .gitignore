@@ -18,4 +18,5 @@ MessageQueue/bin/*
 ServiceCLI/obj/*
 ServiceCLI/bin/*
 PsistatsApp/PsikonStats_TemporaryKey.pfx
+**/*.svn
 env.properties

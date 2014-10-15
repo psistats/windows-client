@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenHardwareMonitor.Hardware;
+using System;
 using System.Diagnostics;
 using System.Management;
 using System.ServiceProcess;
@@ -15,6 +16,11 @@ namespace Psistats.Service
         private Config conf;
 
         private int SecondaryCount = 0;
+
+        private Computer computer;
+
+        private ISensor cpu_temp;
+        private ISensor gpu_temp;
 
         public PsistatsService()
         {
@@ -89,6 +95,11 @@ namespace Psistats.Service
                 
         }
 
+        public void HardwareAdded(IHardware hardware)
+        {
+            this.Debug("Hardware Added: " + hardware.HardwareType + " - " + hardware.Name);
+        }
+
         protected override void OnStart(string[] args)
         {
             this.stat = new Stat();
@@ -103,6 +114,16 @@ namespace Psistats.Service
                     this.DebugConfig(conf);
                 }
 
+
+
+                computer = new Computer();
+                computer.CPUEnabled = true;
+                computer.GPUEnabled = true;
+
+                computer.HardwareAdded += new HardwareEventHandler(HardwareAdded);
+
+                computer.Open();
+
                 this.server = new Psistats.MessageQueue.Server(conf);
                 this.server.Connect();
                 this.server.Bind(this.stat.hostname);
@@ -111,6 +132,8 @@ namespace Psistats.Service
                 this.primaryTimer.AutoReset = true;
                 this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.PrimaryWorker);
                 this.primaryTimer.Start();
+
+
 
             }
             catch (Exception exc)

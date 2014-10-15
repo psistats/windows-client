@@ -141,7 +141,9 @@
     <EmbeddedResource Include="SettingsScreen.resx">
       <DependentUpon>SettingsScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.manifest" />
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -178,6 +180,10 @@
     <ProjectReference Include="..\MessageQueue\MessageQueue.csproj">
       <Project>{33b55219-b51f-4974-b774-93f2aa779362}</Project>
       <Name>MessageQueue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\open-hardware-monitor\OpenHardwareMonitorLib.csproj">
+      <Project>{b0397530-545a-471d-bb74-027ae456df1a}</Project>
+      <Name>OpenHardwareMonitorLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PsistatsCommon\Common.csproj">
       <Project>{e30964b4-4453-42dc-8adc-1033a3c25728}</Project>

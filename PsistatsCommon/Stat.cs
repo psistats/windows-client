@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
+using OpenHardwareMonitor.Hardware;
 
 namespace Psistats
 {
@@ -21,6 +22,11 @@ namespace Psistats
         private PerformanceCounter uptimeCounter;
 
         private ManagementObjectSearcher searcher;
+
+        private ISensor cpu_temp_sensor;
+        private ISensor gpu_temp_sensor;
+
+        private Computer computer;
 
         public double uptime
         {
@@ -69,10 +75,32 @@ namespace Psistats
             }
         }
 
+        private Computer GetComputer()
+        {
+            if (computer == null)
+            {
+                computer = new Computer();
+                computer.CPUEnabled = true;
+                computer.Open();
+            }
+            return computer;
+        }
+
         public double cpu_temp
         {
             get
             {
+                if (computer == null)
+                {
+                    computer = new Computer();
+                    
+                }
+
+                if (computer.CPUEnabled == false)
+                {
+                    computer.CPUEnabled = true;
+                }
+
                 Double CPUtprt = 0;
 
                 ManagementObjectSearcher mos = new ManagementObjectSearcher(@"root\WMI", "Select * From MSAcpi_ThermalZoneTemperature");

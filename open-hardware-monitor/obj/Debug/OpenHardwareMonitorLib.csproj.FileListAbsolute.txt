@@ -1,0 +1,5 @@
+C:\Users\v0idnull\Documents\GitHub\windows-client\open-hardware-monitor\Bin\Debug\OpenHardwareMonitorLib.dll
+C:\Users\v0idnull\Documents\GitHub\windows-client\open-hardware-monitor\Bin\Debug\OpenHardwareMonitorLib.pdb
+C:\Users\v0idnull\Documents\GitHub\windows-client\open-hardware-monitor\obj\Debug\OpenHardwareMonitorLib.csprojResolveAssemblyReference.cache
+C:\Users\v0idnull\Documents\GitHub\windows-client\open-hardware-monitor\obj\Debug\OpenHardwareMonitorLib.dll
+C:\Users\v0idnull\Documents\GitHub\windows-client\open-hardware-monitor\obj\Debug\OpenHardwareMonitorLib.pdb
