@@ -24,7 +24,6 @@ namespace Psistats
         private ManagementObjectSearcher searcher;
 
         private ISensor cpu_temp_sensor;
-        private ISensor gpu_temp_sensor;
 
         private IHardware cpu_hardware;
 

@@ -9,7 +9,6 @@ namespace Psistats.Service
     class PsistatsService : ServiceBase, IDisposable
     {
         private System.Timers.Timer primaryTimer;
-        private System.Timers.Timer secondaryTimer;
 
         private Stat stat;
         private Psistats.MessageQueue.Server server;
@@ -18,9 +17,6 @@ namespace Psistats.Service
         private int SecondaryCount = 0;
 
         private Computer computer;
-
-        private ISensor cpu_temp;
-        private ISensor gpu_temp;
 
         public PsistatsService()
         {
