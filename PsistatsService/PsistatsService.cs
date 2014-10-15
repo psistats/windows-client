@@ -103,6 +103,12 @@ namespace Psistats.Service
                 if (this.conf.debug_enabled)
                 {
                     this.DebugConfig(conf);
+
+                    IHardware cpu = stat.GetCpuHardware();
+                    this.Debug("CPU Detected:" + cpu.HardwareType + " - " + cpu.Name);
+
+                    ISensor cpu_sensor = stat.GetCpuSensor();
+                    this.Debug("CPU Temp Sensor Detected:" + cpu_sensor.SensorType + " - " + cpu_sensor.Name);
                 }
 
                 this.server = new Psistats.MessageQueue.Server(conf);
