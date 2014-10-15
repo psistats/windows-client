@@ -91,11 +91,6 @@ namespace Psistats.Service
                 
         }
 
-        public void HardwareAdded(IHardware hardware)
-        {
-            this.Debug("Hardware Added: " + hardware.HardwareType + " - " + hardware.Name);
-        }
-
         protected override void OnStart(string[] args)
         {
             this.stat = new Stat();
@@ -109,16 +104,6 @@ namespace Psistats.Service
                 {
                     this.DebugConfig(conf);
                 }
-
-
-
-                computer = new Computer();
-                computer.CPUEnabled = true;
-                computer.GPUEnabled = true;
-
-                computer.HardwareAdded += new HardwareEventHandler(HardwareAdded);
-
-                computer.Open();
 
                 this.server = new Psistats.MessageQueue.Server(conf);
                 this.server.Connect();
