@@ -73,7 +73,7 @@ namespace Psistats.MessageQueue
             msg.uptime = stat.uptime;
             msg.ipaddr = stat.ipaddr;
             msg.cpu = stat.cpu;
-            msg.cpu_temp = stat.cpu_temp;
+            msg.cpu_temp = (double) stat.cpu_temp;
             msg.mem = stat.mem;
 
             return msg;

@@ -18,7 +18,6 @@ MessageQueue/bin/*
 ServiceCLI/obj/*
 ServiceCLI/bin/*
 PsistatsApp/PsikonStats_TemporaryKey.pfx
-open-hardware-monitor/bin/*
 open-hardware-monitor/Bin/*
 open-hardware-monitor/obj/*
 **/*.svn
