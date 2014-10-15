@@ -26,6 +26,8 @@ namespace Psistats
         private ISensor cpu_temp_sensor;
         private ISensor gpu_temp_sensor;
 
+        private IHardware cpu_hardware;
+
         private Computer computer;
 
         public double uptime
@@ -75,7 +77,7 @@ namespace Psistats
             }
         }
 
-        private Computer GetComputer()
+        public Computer GetComputer()
         {
             if (computer == null)
             {
@@ -86,30 +88,60 @@ namespace Psistats
             return computer;
         }
 
+        public IHardware GetCpuHardware()
+        {
+            if (this.cpu_hardware == null)
+            {
+                Computer comp = GetComputer();
+                foreach (IHardware hardware in comp.Hardware)
+                {
+                    if (hardware.HardwareType == HardwareType.CPU)
+                    {
+                        this.cpu_hardware = hardware;
+                    }
+                }
+            }
+            return this.cpu_hardware;
+        }
+
+        public ISensor GetCpuSensor()
+        {
+            if (this.cpu_temp_sensor == null)
+            {
+                IHardware cpu = GetCpuHardware();
+                foreach (ISensor sensor in cpu.Sensors)
+                {
+                    if (sensor.SensorType == SensorType.Temperature)
+                    {
+                        if (sensor.Name == "CPU Package")
+                        {
+                            this.cpu_temp_sensor = sensor;
+                            return this.cpu_temp_sensor;
+                        }
+                        else if (sensor.Name == "CPU Core #1")
+                        {
+                            this.cpu_temp_sensor = sensor;
+                            return this.cpu_temp_sensor;
+                        }
+                    }
+                }
+                return null;
+            }
+            else
+            {
+                return this.cpu_temp_sensor;
+            }
+        }
+
         public double cpu_temp
         {
             get
             {
-                if (computer == null)
-                {
-                    computer = new Computer();
-                    
-                }
+                var hardware = GetCpuHardware();
+                hardware.Update();
 
-                if (computer.CPUEnabled == false)
-                {
-                    computer.CPUEnabled = true;
-                }
-
-                Double CPUtprt = 0;
-
-                ManagementObjectSearcher mos = new ManagementObjectSearcher(@"root\WMI", "Select * From MSAcpi_ThermalZoneTemperature");
-                foreach (System.Management.ManagementObject mo in mos.Get())
-                {
-                    CPUtprt = Convert.ToDouble(Convert.ToDouble(mo.GetPropertyValue("CurrentTemperature").ToString()) - 2732) / 10;
-                }
-
-                return CPUtprt;
+                var sensor = GetCpuSensor();
+                return System.Convert.ToDouble(sensor.Value);
             }
         }
 
