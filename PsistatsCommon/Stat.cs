@@ -137,15 +137,19 @@ namespace Psistats
             get
             {
                 var hardware = GetCpuHardware();
+                if (hardware == null)
+                {
+                    return null;
+                }
                 hardware.Update();
 
                 var sensor = GetCpuSensor();
-                if (sensor != null)
+                if (sensor == null)
                 {
-                    return System.Convert.ToDouble(sensor.Value);
+                    return null;
+                    
                 }
-
-                return null;
+                return System.Convert.ToDouble(sensor.Value);
             }
         }
 
