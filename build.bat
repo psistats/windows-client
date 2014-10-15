@@ -9,7 +9,6 @@ IF NOT EXIST %MSBUILDDIR%nul goto MissingMSBuildToolsPath
 IF NOT EXIST %MSBUILDDIR%msbuild.exe goto MissingMSBuildExe
 
 :: "%MSBUILDDIR%msbuild.exe" /?
-"%MSBUILDDIR%msbuild.exe" PsikonStats.sln /v:d /t:clean /p:Configuration=%1
 "%MSBUILDDIR%msbuild.exe" PsikonStats.sln /v:d /t:rebuild /p:Configuration=%1
 
 
