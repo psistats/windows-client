@@ -53,9 +53,6 @@
         <Component Id="ServiceCLIComponent">
           <File Id="PsistatsServiceCLI" Name="$(var.PsistatsServiceCLI.TargetFileName)" Source="$(var.PsistatsServiceCLI.TargetPath)" DiskId="1" />
         </Component>
-        <Component Id="OpenHardwareMonitorLibComponent">
-          <File Id="OpenHardwareMonitorLib" Name="$(var.OpenHardwareMonitorLib.TargetFileName)" Source="$(var.OpenHardwareMonitorLib.TargetPath)" DiskId="1" />
-        </Component>
         <Component Id="ConfigLibComponent" Guid="BCE0E6AC-8799-46D8-8984-EF79B0A0F2D7">
           <RegistryValue Root="HKLM" Key="SOFTWARE\Psikon\Psistats" Value="[AppDataFolder]\Psikon\Psistats\psistats.xml" Type="string" Name="config" KeyPath="yes" />
         </Component>

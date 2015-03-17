@@ -59,6 +59,10 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenHardwareMonitorLib, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.1.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\rmqinstaller\RabbitMQ.Client.dll</HintPath>
@@ -90,6 +94,7 @@
     </None>
     <None Include="app.manifest" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,10 +104,6 @@
     <ProjectReference Include="..\MessageQueue\MessageQueue.csproj">
       <Project>{33b55219-b51f-4974-b774-93f2aa779362}</Project>
       <Name>MessageQueue</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\open-hardware-monitor\OpenHardwareMonitorLib.csproj">
-      <Project>{b0397530-545a-471d-bb74-027ae456df1a}</Project>
-      <Name>OpenHardwareMonitorLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PsistatsCommon\Common.csproj">
       <Project>{e30964b4-4453-42dc-8adc-1033a3c25728}</Project>

@@ -35,6 +35,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenHardwareMonitorLib, Version=0.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\rmqinstaller\RabbitMQ.Client.dll</HintPath>
     </Reference>
@@ -60,10 +64,7 @@
     <Compile Include="Stat.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\open-hardware-monitor\OpenHardwareMonitorLib.csproj">
-      <Project>{b0397530-545a-471d-bb74-027ae456df1a}</Project>
-      <Name>OpenHardwareMonitorLib</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
