@@ -7,6 +7,13 @@ using System.Windows.Forms;
 
 namespace Psistats.App.Utils
 {
+    /// <summary>
+    /// Base form
+    /// </summary>
+    /// <remarks>
+    /// Provides a variety of helpful methods for threadsafe manipulation of
+    /// form elements.
+    /// </remarks>
     public partial class BaseForm : Form
     {
         delegate void SetComboBoxCallback(ComboBox control, string text);

@@ -32,13 +32,7 @@ namespace Psistats
 
         public void Debug(Config conf)
         {
-
-            string msg = "Server Host: " + conf.server_hostname + "\r";
-            msg += "Server Port: " + conf.server_port.ToString() + "\r";
-            msg += "Server Username: " + conf.server_username + "\r";
-            msg += "Server VHost: " + conf.server_vhost + "\r";
-
-            msg += "Exchange Name: " + conf.exchange_name + "\r";
+            string msg = "Exchange Name: " + conf.exchange_name + "\r";
             msg += "Exchange Autodelete: " + conf.exchange_autodelete.ToString() + "\r";
             msg += "Exchange Durable: " + conf.exchange_durable.ToString() + "\r";
             msg += "Exchange Type: " + conf.exchange_type + "\r";

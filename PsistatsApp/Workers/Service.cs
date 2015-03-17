@@ -14,20 +14,17 @@ namespace Psistats.App.Workers
 
         public override void DoWork(object sender, DoWorkEventArgs e)
         {
-            this.form.SetNotificationText("Checking service status");
+            this.log("Checking service...");
             if (Psistats.ServiceUtils.Utils.IsRunning() == true)
             {
                 this.form.SetServiceButton(true);
-                this.form.SetTextContent(this.form.service_status_label, "Online");
+                this.log("Service Started");
             }
             else
             {
                 this.form.SetServiceButton(false);
-                this.form.SetTextContent(this.form.service_status_label, "Offline");
+                this.log("Service Stopped");
             }
-
-            this.form.SetNotificationText(" ");
-                
         }
     }
 
@@ -41,10 +38,6 @@ namespace Psistats.App.Workers
         public override void DoWork(object sender, DoWorkEventArgs e)
         {
 
-
-
-            
-
             try
             {
 
@@ -52,10 +45,12 @@ namespace Psistats.App.Workers
 
                 if (Psistats.ServiceUtils.Utils.IsRunning() == true)
                 {
+                    this.log("Stopping service");
                     arg = "uninstall";
                 }
                 else
                 {
+                    this.log("Starting service");
                     arg = "install";
                 }
 
@@ -82,8 +77,7 @@ namespace Psistats.App.Workers
                 Debug.WriteLine(exc.ToString());
                 Debug.WriteLine(exc.Message);
                 Debug.WriteLine(exc.StackTrace);
-                MessageBox.Show(exc.ToString());
-                this.form.SetNotificationText("Was not able to toggle service.");
+                this.form.AddLog(exc.ToString());
             }
         }
     }

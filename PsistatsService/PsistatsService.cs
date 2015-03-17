@@ -67,11 +67,7 @@ namespace Psistats.Service
 
         protected void DebugConfig(Config conf)
         {
-            string msg = "Server Hostname: " + conf.server_hostname + "\r";
-            msg += "Server Post: " + conf.server_port.ToString() + "\r";
-            msg += "Server Username: " + conf.server_username + "\r";
-            msg += "Server Password: " + conf.server_password + "\r";
-            msg += "Server Virtualhost: " + conf.server_vhost + "\r";
+            string msg = "Server URI: " + conf.server_url + "\r";
             msg += "\r";
             msg += "Exchange Name: " + conf.exchange_name + "\r";
             msg += "Exchange Type: " + conf.exchange_type + "\r";
@@ -199,7 +195,7 @@ namespace Psistats.Service
                 msg.Mem = stat.mem;
                 msg.Cpu = stat.cpu;
 
-                if (conf.app_cputemp)
+                if (conf.enabled_cputemp)
                 {
                     try
                     {
@@ -211,7 +207,7 @@ namespace Psistats.Service
                     catch (ManagementException)
                     {
                         this.Error("CPU Temperature not available through WMI");
-                        conf.app_cputemp = false;
+                        conf.enabled_cputemp = false;
                     }
                 }
 

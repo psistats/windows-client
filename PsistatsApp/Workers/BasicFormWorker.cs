@@ -29,6 +29,11 @@ namespace Psistats.App.Workers
             worker.DoWork += DoWork;
         }
 
+        public void log(String msg)
+        {
+            this.form.AddLog(msg);
+        }
+
         public BackgroundWorker GetWorker()
         {
             if (this.worker == null)

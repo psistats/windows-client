@@ -13,11 +13,7 @@ namespace Psistats
 {
     public class Config
     {
-        public string server_hostname = "localhost";
-        public int server_port = 5672;
-        public string server_username = "guest";
-        public string server_password = "guest";
-        public string server_vhost = "/";
+        public string server_url = "amqp://guest:guest@localhost:5672/";
 
         public string exchange_name = "psistats";
         public string exchange_type = "Topic";
@@ -34,7 +30,12 @@ namespace Psistats
         public int secondary_timer = 5;
         public int retry_timer = 5;
         public bool debug_enabled = false;
-        public bool app_cputemp = true;
+
+        public bool enabled_cpu = true;
+        public bool enabled_mem = true;
+        public bool enabled_cputemp = true;
+        public bool enabled_uptime = true;
+        public bool enabled_hostname = true;
 
         public Config() { }
 

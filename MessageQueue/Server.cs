@@ -38,12 +38,8 @@ namespace Psistats.MessageQueue
         public void Connect()
         {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.HostName = conf.server_hostname;
-            factory.Port = conf.server_port;
-            factory.UserName = conf.server_username;
-            factory.Password = conf.server_password;
-            factory.VirtualHost = conf.server_vhost;
-
+            factory.uri = new Uri(conf.server_url);
+            
             this.conn = factory.CreateConnection();
             this.channel = this.conn.CreateModel();
         }
