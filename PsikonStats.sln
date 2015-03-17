@@ -16,8 +16,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "PsistatsCommon\Co
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Installer", "Psistats.Installer\Installer.wixproj", "{DB9376B9-218E-4CD0-8140-59A39DA4A5E4}"
 EndProject
-Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "rmqinstaller", "rmqinstaller\rmqinstaller.wixproj", "{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}"
-EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Bootstrapper", "Bootstrapper\Bootstrapper.wixproj", "{1FEE5220-DFFD-4805-A360-577974C3B64A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageQueue", "MessageQueue\MessageQueue.csproj", "{33B55219-B51F-4974-B774-93F2AA779362}"
@@ -89,20 +87,6 @@ Global
 		{DB9376B9-218E-4CD0-8140-59A39DA4A5E4}.Release|Win32.Build.0 = Release|x86
 		{DB9376B9-218E-4CD0-8140-59A39DA4A5E4}.Release|x86.ActiveCfg = Release|x86
 		{DB9376B9-218E-4CD0-8140-59A39DA4A5E4}.Release|x86.Build.0 = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|Win32.ActiveCfg = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|Win32.Build.0 = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|x86.ActiveCfg = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Debug|x86.Build.0 = Debug|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|Any CPU.ActiveCfg = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|Mixed Platforms.Build.0 = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|Win32.ActiveCfg = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|Win32.Build.0 = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|x86.ActiveCfg = Release|x86
-		{01A2E1F7-7D97-4C95-A364-EF9F706EB2B2}.Release|x86.Build.0 = Release|x86
 		{1FEE5220-DFFD-4805-A360-577974C3B64A}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{1FEE5220-DFFD-4805-A360-577974C3B64A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{1FEE5220-DFFD-4805-A360-577974C3B64A}.Debug|Mixed Platforms.Build.0 = Debug|x86

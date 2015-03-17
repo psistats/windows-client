@@ -52,7 +52,7 @@ namespace Psistats.MessageQueue
 
         public void Bind(string hostname)
         {
-            var queue_opts = new Dictionary<string, int>();
+            var queue_opts = new Dictionary<string, object>();
             queue_opts["x-message-ttl"] = conf.queue_ttl;
 
             queue_name = conf.queue_prefix + "." + hostname;

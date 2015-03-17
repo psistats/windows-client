@@ -15,8 +15,6 @@
       <PackageGroupRef Id="NetFx40Redist"/>
       <MsiPackage
         SourceFile="$(var.Installer.TargetPath)" />
-      <MsiPackage
-        SourceFile="$(var.rmqinstaller.TargetPath)" />
 		</Chain>
 	</Bundle>
 </Wix>
