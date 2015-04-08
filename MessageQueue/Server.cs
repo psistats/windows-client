@@ -38,7 +38,7 @@ namespace Psistats.MessageQueue
         public void Connect()
         {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.uri = new Uri(conf.server_url);
+            factory.uri = new Uri(conf.ServerUrl);
             
             this.conn = factory.CreateConnection();
             this.channel = this.conn.CreateModel();
@@ -53,13 +53,13 @@ namespace Psistats.MessageQueue
         public void Bind(string hostname)
         {
             var queue_opts = new Dictionary<string, object>();
-            queue_opts["x-message-ttl"] = conf.queue_ttl;
+            queue_opts["x-message-ttl"] = conf.QueueTTL;
 
-            queue_name = conf.queue_prefix + "." + hostname;
+            queue_name = conf.QueuePrefix + "." + hostname;
 
-            channel.ExchangeDeclare(conf.exchange_name, conf.exchange_type.ToLower(), conf.exchange_durable, conf.exchange_autodelete, null);
-            channel.QueueDeclare(queue_name, conf.queue_durable, conf.queue_exclusive, conf.queue_autodelete, queue_opts);
-            channel.QueueBind(queue_name, conf.exchange_name, queue_name);
+            channel.ExchangeDeclare(conf.ExchangeName, conf.ExchangeType.ToLower(), conf.ExchangeDurable, conf.ExchangeAutodelete, null);
+            channel.QueueDeclare(queue_name, conf.QueueDurable, conf.QueueExclusive, conf.QueueAutodelete, queue_opts);
+            channel.QueueBind(queue_name, conf.ExchangeName, queue_name);
         }
 
         public Message getNextMessage()
@@ -96,7 +96,7 @@ namespace Psistats.MessageQueue
             p.ContentEncoding = "UTF-8";
 
             byte[] bytes = Encoding.Default.GetBytes(msg);
-            channel.BasicPublish(conf.exchange_name, queue_name, p, bytes);
+            channel.BasicPublish(conf.ExchangeName, queue_name, p, bytes);
         }
 
         public void Send(Message msg)

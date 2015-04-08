@@ -32,20 +32,20 @@ namespace Psistats
 
         public void Debug(Config conf)
         {
-            string msg = "Exchange Name: " + conf.exchange_name + "\r";
-            msg += "Exchange Autodelete: " + conf.exchange_autodelete.ToString() + "\r";
-            msg += "Exchange Durable: " + conf.exchange_durable.ToString() + "\r";
-            msg += "Exchange Type: " + conf.exchange_type + "\r";
+            string msg = "Exchange Name: " + conf.ExchangeName + "\r";
+            msg += "Exchange Autodelete: " + conf.ExchangeAutodelete.ToString() + "\r";
+            msg += "Exchange Durable: " + conf.ExchangeDurable.ToString() + "\r";
+            msg += "Exchange Type: " + conf.ExchangeType + "\r";
 
-            msg += "Queue Prefix: " + conf.queue_prefix + "\r";
-            msg += "Queue Autodelete: " + conf.queue_autodelete + "\r";
-            msg += "Queue Exclusive: " + conf.queue_exclusive + "\r";
-            msg += "Queue Durable: " + conf.queue_durable + "\r";
-            msg += "Queue TTL: " + conf.queue_ttl.ToString() + "\r";
+            msg += "Queue Prefix: " + conf.QueuePrefix + "\r";
+            msg += "Queue Autodelete: " + conf.QueueAutodelete + "\r";
+            msg += "Queue Exclusive: " + conf.QueueExclusive + "\r";
+            msg += "Queue Durable: " + conf.QueueDurable + "\r";
+            msg += "Queue TTL: " + conf.QueueTTL.ToString() + "\r";
 
-            msg += "App Timer: " + conf.primary_timer.ToString() + "\r";
-            msg += "Meta Timer: " + conf.secondary_timer.ToString() + "\r";
-            msg += "Retry Timer: " + conf.retry_timer.ToString() + "\r";
+            msg += "App Timer: " + conf.PrimaryTimer.ToString() + "\r";
+            msg += "Meta Timer: " + conf.SecondaryTimer.ToString() + "\r";
+            msg += "Retry Timer: " + conf.RetryTimer.ToString() + "\r";
 
             Debug(msg);
         }

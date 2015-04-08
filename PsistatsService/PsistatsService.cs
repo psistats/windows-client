@@ -67,21 +67,21 @@ namespace Psistats.Service
 
         protected void DebugConfig(Config conf)
         {
-            string msg = "Server URI: " + this.conf.server_url + "\r";
+            string msg = "Server URI: " + this.conf.ServerUrl + "\r";
             msg += "\r";
-            msg += "Exchange Name: " + this.conf.exchange_name + "\r";
-            msg += "Exchange Type: " + this.conf.exchange_type + "\r";
-            msg += "Exchange Durable: " + this.conf.exchange_durable.ToString() + "\r";
-            msg += "Exchange AutoDelete: " + this.conf.exchange_autodelete.ToString() + "\r";
+            msg += "Exchange Name: " + this.conf.ExchangeName + "\r";
+            msg += "Exchange Type: " + this.conf.ExchangeType + "\r";
+            msg += "Exchange Durable: " + this.conf.ExchangeDurable.ToString() + "\r";
+            msg += "Exchange AutoDelete: " + this.conf.ExchangeAutodelete.ToString() + "\r";
             msg += "\r";
-            msg += "Queue Prefix: " + this.conf.queue_prefix + "\r";
-            msg += "Queue Exclusive: " + this.conf.queue_exclusive.ToString() + "\r";
-            msg += "Queue Durable: " + this.conf.queue_durable.ToString() + "\r";
-            msg += "Queue AutoDelete: " + this.conf.queue_autodelete.ToString() + "\r";
-            msg += "Queue TTL: " + this.conf.queue_ttl.ToString() + "\r";
+            msg += "Queue Prefix: " + this.conf.QueuePrefix + "\r";
+            msg += "Queue Exclusive: " + this.conf.QueueExclusive.ToString() + "\r";
+            msg += "Queue Durable: " + this.conf.QueueDurable.ToString() + "\r";
+            msg += "Queue AutoDelete: " + this.conf.QueueAutodelete.ToString() + "\r";
+            msg += "Queue TTL: " + this.conf.QueueTTL.ToString() + "\r";
             msg += "\r";
-            msg += "App Main Timer: " + this.conf.primary_timer.ToString() + "\r";
-            msg += "App Secondary Timer: " + this.conf.secondary_timer.ToString() + "\r";
+            msg += "App Main Timer: " + this.conf.PrimaryTimer.ToString() + "\r";
+            msg += "App Secondary Timer: " + this.conf.SecondaryTimer.ToString() + "\r";
 
             this.EventLog.WriteEntry(msg);
                 
@@ -96,7 +96,7 @@ namespace Psistats.Service
 
                 this.conf = Config.LoadConf();
 
-                if (this.conf.debug_enabled)
+                if (this.conf.DebugEnabled)
                 {
                     this.DebugConfig(conf);
 
@@ -111,7 +111,7 @@ namespace Psistats.Service
                 this.server.Connect();
                 this.server.Bind(this.stat.hostname);
 
-                this.primaryTimer = new System.Timers.Timer(this.conf.primary_timer * 1000);
+                this.primaryTimer = new System.Timers.Timer(this.conf.PrimaryTimer * 1000);
                 this.primaryTimer.AutoReset = true;
                 this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.PrimaryWorker);
                 this.primaryTimer.Start();
@@ -146,7 +146,7 @@ namespace Psistats.Service
                     this.server.Bind(this.stat.hostname);
                 }
 
-                if (this.conf.debug_enabled)
+                if (this.conf.DebugEnabled)
                 {
                     this.Debug(Psistats.MessageQueue.Message.ToJson(msg));
                 }
@@ -162,7 +162,7 @@ namespace Psistats.Service
 
                 this.LogException(exc);
 
-                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
+                System.Threading.Thread.Sleep(this.conf.RetryTimer * 1000);
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException exc)
             {
@@ -172,7 +172,7 @@ namespace Psistats.Service
                 }
                 this.LogException(exc);
 
-                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
+                System.Threading.Thread.Sleep(this.conf.RetryTimer * 1000);
             }
             catch (Exception exc)
             {
@@ -182,7 +182,7 @@ namespace Psistats.Service
                 }
                 this.LogException(exc);
 
-                System.Threading.Thread.Sleep(this.conf.retry_timer * 1000);
+                System.Threading.Thread.Sleep(this.conf.RetryTimer * 1000);
             }
         }
 
@@ -195,7 +195,7 @@ namespace Psistats.Service
                 msg.Mem = this.stat.mem;
                 msg.Cpu = this.stat.cpu;
 
-                if (this.conf.enabled_cputemp)
+                if (this.conf.EnableCpuTemp)
                 {
                     try
                     {
@@ -207,13 +207,13 @@ namespace Psistats.Service
                     catch (ManagementException)
                     {
                         this.Error("CPU Temperature not available through WMI");
-                        this.conf.enabled_cputemp = false;
+                        this.conf.EnableCpuTemp = false;
                     }
                 }
 
                 this.Courier(msg);
 
-                if (this.SecondaryCount == this.conf.secondary_timer)
+                if (this.SecondaryCount == this.conf.SecondaryTimer)
                 {
                     this.SecondaryWorker(sender, e);
                     this.SecondaryCount = 1;

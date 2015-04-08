@@ -13,31 +13,62 @@ namespace Psistats
 {
     public class Config
     {
-        public string server_url = "amqp://guest:guest@localhost:5672/";
+        public string ServerUrl
+        {
+            get;
+            set;
+        }
 
-        public string exchange_name = "psistats";
-        public string exchange_type = "Topic";
-        public bool exchange_durable = false;
-        public bool exchange_autodelete = false;
+        public string ExchangeName { get; set; }
+        public string ExchangeType { get; set; }
+        public bool ExchangeDurable { get; set; }
+        public bool ExchangeAutodelete { get; set; }
 
-        public string queue_prefix = "psistats";
-        public bool queue_exclusive = true;
-        public bool queue_durable = false;
-        public bool queue_autodelete = true;
-        public int queue_ttl = 10000;
+        public string QueuePrefix { get; set; }
+        public bool QueueExclusive { get; set; }
+        public bool QueueDurable { get; set; }
+        public bool QueueAutodelete { get; set; }
+        public int QueueTTL { get; set; }
 
-        public int primary_timer = 1;
-        public int secondary_timer = 5;
-        public int retry_timer = 5;
-        public bool debug_enabled = false;
+        public int PrimaryTimer { get; set; }
+        public int SecondaryTimer { get; set; }
+        public int RetryTimer { get; set; }
+        public bool DebugEnabled { get; set; }
 
-        public bool enabled_cpu = true;
-        public bool enabled_mem = true;
-        public bool enabled_cputemp = true;
-        public bool enabled_uptime = true;
-        public bool enabled_hostname = true;
+        public bool EnableCpu { get; set; }
+        public bool EnableMem { get; set; }
+        public bool EnableCpuTemp { get; set; }
+        public bool EnableUptime { get; set; }
+        public bool EnableHostname { get; set; }
 
-        public Config() { }
+        public Config() {
+
+            this.ServerUrl = "amqp://guest:guest@localhost:5672";
+
+            this.ExchangeName = "psistats";
+            this.ExchangeType = "Topic";
+            this.ExchangeDurable = false;
+            this.ExchangeAutodelete = false;
+
+            this.QueuePrefix = "psistats";
+            this.QueueExclusive = true;
+            this.QueueDurable = false;
+            this.QueueAutodelete = true;
+            this.QueueTTL = 10000;
+
+            this.PrimaryTimer = 1;
+            this.SecondaryTimer = 5;
+            this.RetryTimer = 5;
+            this.DebugEnabled = false;
+
+            this.EnableCpu = true;
+            this.EnableMem = true;
+            this.EnableCpuTemp = true;
+            this.EnableUptime = true;
+            this.EnableHostname = true;
+
+        
+        }
 
         public static string GetConfigFilePath()
         {
