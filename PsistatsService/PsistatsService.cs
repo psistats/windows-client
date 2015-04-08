@@ -67,21 +67,21 @@ namespace Psistats.Service
 
         protected void DebugConfig(Config conf)
         {
-            string msg = "Server URI: " + conf.server_url + "\r";
+            string msg = "Server URI: " + this.conf.server_url + "\r";
             msg += "\r";
-            msg += "Exchange Name: " + conf.exchange_name + "\r";
-            msg += "Exchange Type: " + conf.exchange_type + "\r";
-            msg += "Exchange Durable: " + conf.exchange_durable.ToString() + "\r";
-            msg += "Exchange AutoDelete: " + conf.exchange_autodelete.ToString() + "\r";
+            msg += "Exchange Name: " + this.conf.exchange_name + "\r";
+            msg += "Exchange Type: " + this.conf.exchange_type + "\r";
+            msg += "Exchange Durable: " + this.conf.exchange_durable.ToString() + "\r";
+            msg += "Exchange AutoDelete: " + this.conf.exchange_autodelete.ToString() + "\r";
             msg += "\r";
-            msg += "Queue Prefix: " + conf.queue_prefix + "\r";
-            msg += "Queue Exclusive: " + conf.queue_exclusive.ToString() + "\r";
-            msg += "Queue Durable: " + conf.queue_durable.ToString() + "\r";
-            msg += "Queue AutoDelete: " + conf.queue_autodelete.ToString() + "\r";
-            msg += "Queue TTL: " + conf.queue_ttl.ToString() + "\r";
+            msg += "Queue Prefix: " + this.conf.queue_prefix + "\r";
+            msg += "Queue Exclusive: " + this.conf.queue_exclusive.ToString() + "\r";
+            msg += "Queue Durable: " + this.conf.queue_durable.ToString() + "\r";
+            msg += "Queue AutoDelete: " + this.conf.queue_autodelete.ToString() + "\r";
+            msg += "Queue TTL: " + this.conf.queue_ttl.ToString() + "\r";
             msg += "\r";
-            msg += "App Main Timer: " + conf.primary_timer.ToString() + "\r";
-            msg += "App Secondary Timer: " + conf.secondary_timer.ToString() + "\r";
+            msg += "App Main Timer: " + this.conf.primary_timer.ToString() + "\r";
+            msg += "App Secondary Timer: " + this.conf.secondary_timer.ToString() + "\r";
 
             this.EventLog.WriteEntry(msg);
                 
@@ -93,25 +93,25 @@ namespace Psistats.Service
 
             try
             {
-                
-                conf = Config.LoadConf();
+
+                this.conf = Config.LoadConf();
 
                 if (this.conf.debug_enabled)
                 {
                     this.DebugConfig(conf);
 
-                    IHardware cpu = stat.GetCpuHardware();
+                    IHardware cpu = this.stat.GetCpuHardware();
                     this.Debug("CPU Detected:" + cpu.HardwareType + " - " + cpu.Name);
 
                     ISensor cpu_sensor = stat.GetCpuSensor();
                     this.Debug("CPU Temp Sensor Detected:" + cpu_sensor.SensorType + " - " + cpu_sensor.Name);
                 }
 
-                this.server = new Psistats.MessageQueue.Server(conf);
+                this.server = new Psistats.MessageQueue.Server(this.conf);
                 this.server.Connect();
                 this.server.Bind(this.stat.hostname);
 
-                this.primaryTimer = new System.Timers.Timer(conf.primary_timer * 1000);
+                this.primaryTimer = new System.Timers.Timer(this.conf.primary_timer * 1000);
                 this.primaryTimer.AutoReset = true;
                 this.primaryTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.PrimaryWorker);
                 this.primaryTimer.Start();
@@ -155,9 +155,9 @@ namespace Psistats.Service
             }
             catch (RabbitMQ.Client.Exceptions.ConnectFailureException exc)
             {
-                if (server.IsConnected())
+                if (this.server.IsConnected())
                 {
-                    server.Close();
+                    this.server.Close();
                 }
 
                 this.LogException(exc);
@@ -166,9 +166,9 @@ namespace Psistats.Service
             }
             catch (RabbitMQ.Client.Exceptions.AlreadyClosedException exc)
             {
-                if (server.IsConnected())
+                if (this.server.IsConnected())
                 {
-                    server.Close();
+                    this.server.Close();
                 }
                 this.LogException(exc);
 
@@ -176,9 +176,9 @@ namespace Psistats.Service
             }
             catch (Exception exc)
             {
-                if (server.IsConnected())
+                if (this.server.IsConnected())
                 {
-                    server.Close();
+                    this.server.Close();
                 }
                 this.LogException(exc);
 
@@ -191,23 +191,23 @@ namespace Psistats.Service
             try
             {
                 Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
-                msg.Hostname = stat.hostname;
-                msg.Mem = stat.mem;
-                msg.Cpu = stat.cpu;
+                msg.Hostname = this.stat.hostname;
+                msg.Mem = this.stat.mem;
+                msg.Cpu = this.stat.cpu;
 
-                if (conf.enabled_cputemp)
+                if (this.conf.enabled_cputemp)
                 {
                     try
                     {
-                        if (stat.cpu_temp != null)
+                        if (this.stat.cpu_temp != null)
                         {
-                            msg.Cpu_temp = (double) stat.cpu_temp;
+                            msg.Cpu_temp = (double) this.stat.cpu_temp;
                         }
                     }
                     catch (ManagementException)
                     {
                         this.Error("CPU Temperature not available through WMI");
-                        conf.enabled_cputemp = false;
+                        this.conf.enabled_cputemp = false;
                     }
                 }
 
