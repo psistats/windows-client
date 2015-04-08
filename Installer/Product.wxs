@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="2EA165B1-B9F8-4A97-A20C-0CC30719314B" Name="Psistats" Language="1033" Version="0.1.0.0" Manufacturer="Psikon" UpgradeCode="5f5a71c7-cbeb-4e61-967c-4a44936beb3c">
+		<Package InstallerVersion="300" Compressed="yes" InstallScope="perMachine" />
+    <Media Id="1" Cabinet="psistats.cab" EmbedCab="yes" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ProgramFilesCompanyFolder" Name="Psikon">
+          <Directory Id="INSTALLFOLDER" Name="Psistats" />
+        </Directory>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ProgramMenuCompanyFolder" Name="Psikon">
+          <Directory Id="ApplicationProgramsFolder" Name="Psistats" />
+        
+        </Directory>
+      </Directory>      
+    </Directory>
+
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="psistats.exe" Guid="*">
+        <File Id="psistats.exe" Source="$(var.App.TargetPath)" KeyPath="yes" />
+        <RemoveFolder Id="ProgramMenuCompanyFolder" Directory="ProgramMenuCompanyFolder" On="uninstall"/>
+      </Component>
+      <Component Id="common.dll" Guid="*">
+        <File Id="common.dll" Source="$(var.Common.TargetPath)" KeyPath="yes" />
+      </Component>
+      <Component Id="PsistatsService.exe" Guid="*">
+        <File Id="PsistatsService.exe" Source="$(var.Service.TargetPath)" KeyPath="yes" />
+        <ServiceInstall
+            Id="ServiceInstaller"
+            Type="ownProcess"
+            Vital="yes"
+            Name="PsistatsService"
+            DisplayName="PsistatsService"
+            Description="Psistats service that reports computer vitals to a rabbitmq server"
+            Start="auto"
+            Account="LocalSystem"
+            ErrorControl="normal"
+            Interactive="no"
+            />
+        <ServiceControl Id="ServiceControl" Name="Psistats" Remove="uninstall" Stop="both" Wait="yes" />
+      </Component>
+      <Component Id="MessageQueue.dll" Guid="*" >
+        <File Id="MessageQueue.dll" Source="$(var.MessageQueue.TargetPath)" KeyPath="yes" />
+      </Component>
+      <Component Id="PsistatsServiceCLI.exe" Guid="*">
+        <File Id="PsistatsServiceCLI.exe" Source="$(var.PsistatsServiceCLI.TargetPath)" KeyPath="yes" />
+      </Component>
+      <!-- Is there a better way to include these files?? -->
+      <Component Id="RabbitMQ" Guid="*">
+        <File Id="RabbitMQ.Client.dll" Source="$(var.SolutionDir)packages\RabbitMQ.Client.3.5.0\lib\net40\RabbitMQ.Client.dll" />
+      </Component>
+      <Component Id="OpenHardwareLib" Guid="*">
+        <File Id="OpenHardwareMonitorLib.dll" Source="$(var.SolutionDir)packages\OpenHardwareMonitor.0.7.1\lib\net40\OpenHardwareMonitorLib.dll" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+
+      <Component Id="PsistatsShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Psistats"
+                  Target="[#psistats.exe]"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <Shortcut Id="UnstallProduct"
+                  Name="Uninstall"
+                  Description="Uninstall Psistats"
+                  Target="[System64Folder]msiexec.exe"
+                  Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Psikon\Psistats" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+      
+    </DirectoryRef>
+
+    <ComponentGroup Id="PsistatsDependencies">
+      <ComponentRef Id="RabbitMQ"/>
+      <ComponentRef Id="OpenHardwareLib"/>
+    </ComponentGroup>
+    <ComponentGroup Id="PsistatsGroup">
+      <ComponentRef Id="psistats.exe" />
+      <ComponentRef Id="common.dll" />
+      <ComponentRef Id="PsistatsService.exe"/>
+      <ComponentRef Id="MessageQueue.dll"/>
+      <ComponentRef Id="PsistatsServiceCLI.exe"/>
+      <ComponentRef Id="PsistatsShortcut" />
+    </ComponentGroup>
+    
+		<Feature Id="ProductFeature" Title="Psistats" Level="1">
+      <ComponentGroupRef Id="PsistatsGroup" />
+      <ComponentGroupRef Id="PsistatsDependencies" />
+		</Feature>
+	</Product>
+</Wix>

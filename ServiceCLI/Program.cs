@@ -51,10 +51,6 @@ namespace Psistats.ServiceCLI
             }
             else
             {
-                Console.WriteLine("What was it I was supposed to do again?");
-                Console.WriteLine(" ");
-                Console.WriteLine("Press any key to continue...");
-                Console.Read();
                 exitCode = 2;
             }
 

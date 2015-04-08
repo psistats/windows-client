@@ -1,10 +1,8 @@
-Bootstrapper/bin/*
-Bootstrapper/obj/*
 PsikonStats.sdf
 PsikonStats.suo
 PsikonStats.v11.suo
-Psistats.Installer/bin/*
-Psistats.Installer/obj/*
+Installer/bin/*
+Installer/obj/*
 PsistatsApp/bin/*
 PsistatsApp/obj/*
 PsistatsCommon/bin/*
@@ -15,7 +13,6 @@ MessageQueue/obj/*
 MessageQueue/bin/*
 ServiceCLI/obj/*
 ServiceCLI/bin/*
-PsistatsApp/PsikonStats_TemporaryKey.pfx
 **/packages/*
 **/*.svn
 env.properties

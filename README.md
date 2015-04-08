@@ -24,7 +24,7 @@ Uptime is in seconds.
 
 Uptime and IP Addresses are sent at a longer rate than cpu and memory however that rate is configurable.
 
-CPU Temperature is enabled by default, but may not work on all systems. It is dependent on your motherboard making this information available over WMI and is not always accurate. Some work will need to be done to better expose CPU temperatures across Intel/AMD chips.
+CPU Temperature is enabled by default, but may not work on all systems. Psistats uses the Open Hardware Library to get temperature data.
 
 Installation
 ------------
@@ -41,11 +41,7 @@ Configuration
 -------------
 
 ####Server Settings
-* **Hostname / IP:** Address of the RabbitMQ server
-* **Port:** Port number of the RabbitMQ server
-* **Path:** Virtual host path
-* **Username:** RabbitMQ Username
-* **Password:** RabbitMQ Password
+* **URL:** Address of the RabbitMQ server as a url: amqp://[username]:[password]@[hostname]:[port]/[virtual-host]
 
 ####Service Setings
 * **Main Timer:** The main timer broadcasts the cpu and memory usage, hostname, and cpu temperature. Defaults to 1 second.
