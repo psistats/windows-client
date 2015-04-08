@@ -23,51 +23,51 @@ namespace Psistats.App
             InitializeComponent();
 
 
-            evtLog = new EventLog("Application");
-            evtLog.EntryWritten += new EntryWrittenEventHandler(OnEventLog);
-            evtLog.EnableRaisingEvents = true;
+            this.evtLog = new EventLog("Application");
+            this.evtLog.EntryWritten += new EntryWrittenEventHandler(OnEventLog);
+            this.evtLog.EnableRaisingEvents = true;
 
             this.AddLog("Loading configuration...");
-            conf = Config.LoadConf();
+            this.conf = Config.LoadConf();
 
             // TODO Normalize all these form field names!
-            text_serverUrl.Text = conf.server_url;
+            this.text_serverUrl.Text = conf.server_url;
 
-            check_cpu.Checked = conf.enabled_cpu;
-            check_cputemp.Checked = conf.enabled_cputemp;
-            check_mem.Checked = conf.enabled_mem;
-            check_uptime.Checked = conf.enabled_uptime;
-            check_hostname.Checked = conf.enabled_hostname;
+            this.check_cpu.Checked = conf.enabled_cpu;
+            this.check_cputemp.Checked = conf.enabled_cputemp;
+            this.check_mem.Checked = conf.enabled_mem;
+            this.check_uptime.Checked = conf.enabled_uptime;
+            this.check_hostname.Checked = conf.enabled_hostname;
 
-            exchangeName.Text = conf.exchange_name;
-            exchangeType.SelectedItem = conf.exchange_type;
-            exchangeSettings.SetItemChecked(0, conf.exchange_durable);
-            exchangeSettings.SetItemChecked(1, conf.exchange_autodelete);
+            this.exchangeName.Text = conf.exchange_name;
+            this.exchangeType.SelectedItem = conf.exchange_type;
+            this.exchangeSettings.SetItemChecked(0, conf.exchange_durable);
+            this.exchangeSettings.SetItemChecked(1, conf.exchange_autodelete);
 
-            queueName.Text = conf.queue_prefix;
-            queueMessageTTL.Text = conf.queue_ttl.ToString();
-            queueSettings.SetItemChecked(0, conf.queue_exclusive);
-            queueSettings.SetItemChecked(1, conf.queue_durable);
-            queueSettings.SetItemChecked(2, conf.queue_autodelete);
+            this.queueName.Text = conf.queue_prefix;
+            this.queueMessageTTL.Text = conf.queue_ttl.ToString();
+            this.queueSettings.SetItemChecked(0, conf.queue_exclusive);
+            this.queueSettings.SetItemChecked(1, conf.queue_durable);
+            this.queueSettings.SetItemChecked(2, conf.queue_autodelete);
 
-            appPrimaryTimer.Text = conf.primary_timer.ToString();
-            appSecondaryTimer.Text = conf.secondary_timer.ToString();
-            debug_enabled.Checked = conf.debug_enabled;
+            this.appPrimaryTimer.Text = conf.primary_timer.ToString();
+            this.appSecondaryTimer.Text = conf.secondary_timer.ToString();
+            this.debug_enabled.Checked = conf.debug_enabled;
 
         }
 
         public void AddLog(string logItem)
         {
-            if (logBox.InvokeRequired)
+            if (this.logBox.InvokeRequired)
             {
                 AddLogCallback d = new AddLogCallback(AddLog);
-                logBox.Invoke(d, new object[] { logItem });
+                this.logBox.Invoke(d, new object[] { logItem });
             }
             else
             {
-                logBox.Text += logItem + Environment.NewLine;
-                logBox.SelectionStart = logBox.TextLength;
-                logBox.ScrollToCaret();
+                this.logBox.Text += logItem + Environment.NewLine;
+                this.logBox.SelectionStart = logBox.TextLength;
+                this.logBox.ScrollToCaret();
             }
         }
 
@@ -94,34 +94,34 @@ namespace Psistats.App
         {
             // TODO Config saving should be a background task
             this.AddLog("Saving configuration...");
-            conf.server_url = this.text_serverUrl.Text;
-            
-            conf.enabled_cpu = this.check_cpu.Checked;
-            conf.enabled_mem = this.check_mem.Checked;
-            conf.enabled_cputemp = this.check_cputemp.Checked;
-            conf.enabled_uptime = this.check_uptime.Checked;
-            conf.enabled_hostname = this.check_hostname.Checked;
+            this.conf.server_url = this.text_serverUrl.Text;
 
-            conf.primary_timer = int.Parse(appPrimaryTimer.Text);
-            conf.secondary_timer = int.Parse(appSecondaryTimer.Text);
+            this.conf.enabled_cpu = this.check_cpu.Checked;
+            this.conf.enabled_mem = this.check_mem.Checked;
+            this.conf.enabled_cputemp = this.check_cputemp.Checked;
+            this.conf.enabled_uptime = this.check_uptime.Checked;
+            this.conf.enabled_hostname = this.check_hostname.Checked;
 
-            conf.exchange_name = exchangeName.Text;
+            this.conf.primary_timer = int.Parse(appPrimaryTimer.Text);
+            this.conf.secondary_timer = int.Parse(appSecondaryTimer.Text);
 
-            if (exchangeType.SelectedItem != null)
+            this.conf.exchange_name = exchangeName.Text;
+
+            if (this.exchangeType.SelectedItem != null)
             {
-                conf.exchange_type = exchangeType.SelectedItem.ToString();
+                this.conf.exchange_type = exchangeType.SelectedItem.ToString();
             }
-            conf.exchange_durable = exchangeSettings.GetItemChecked(0);
-            conf.exchange_autodelete = exchangeSettings.GetItemChecked(1);
+            this.conf.exchange_durable = exchangeSettings.GetItemChecked(0);
+            this.conf.exchange_autodelete = exchangeSettings.GetItemChecked(1);
 
-            conf.queue_ttl = int.Parse(queueMessageTTL.Text);
-            conf.queue_prefix = queueName.Text;
-            conf.queue_exclusive = queueSettings.GetItemChecked(0);
-            conf.queue_durable = queueSettings.GetItemChecked(1);
-            conf.queue_autodelete = queueSettings.GetItemChecked(2);
+            this.conf.queue_ttl = int.Parse(queueMessageTTL.Text);
+            this.conf.queue_prefix = queueName.Text;
+            this.conf.queue_exclusive = queueSettings.GetItemChecked(0);
+            this.conf.queue_durable = queueSettings.GetItemChecked(1);
+            this.conf.queue_autodelete = queueSettings.GetItemChecked(2);
 
-            conf.retry_timer = 5;
-            conf.debug_enabled = debug_enabled.Checked;
+            this.conf.retry_timer = 5;
+            this.conf.debug_enabled = debug_enabled.Checked;
 
             Config.WriteConf(conf);
             // FIXME ServiceStarter is now the only worker.
