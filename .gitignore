@@ -13,6 +13,9 @@ MessageQueue/obj/*
 MessageQueue/bin/*
 ServiceCLI/obj/*
 ServiceCLI/bin/*
+AppTest/obj/*
+AppTest/bin/*
+**/TestResults/*
 **/packages/*
 **/*.svn
 env.properties
