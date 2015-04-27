@@ -69,12 +69,12 @@ namespace Psistats.MessageQueue
         {
             Message msg = new Message();
 
-            msg.hostname = stat.hostname;
-            msg.uptime = stat.uptime;
-            msg.ipaddr = stat.ipaddr;
-            msg.cpu = stat.cpu;
-            msg.cpu_temp = (double) stat.cpu_temp;
-            msg.mem = stat.mem;
+            msg.hostname = stat.Hostname;
+            msg.uptime = stat.Uptime;
+            msg.ipaddr = stat.Ipaddr;
+            msg.cpu = stat.Cpu;
+            msg.cpu_temp = (double) stat.CpuTemp;
+            msg.mem = stat.Mem;
 
             return msg;
         }

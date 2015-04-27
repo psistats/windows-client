@@ -28,7 +28,7 @@ namespace Psistats.MessageQueue
 
         public bool IsConnected()
         {
-            if (conn.IsOpen)
+            if (this.conn.IsOpen)
             {
                 return true;
             }
@@ -49,25 +49,25 @@ namespace Psistats.MessageQueue
             var queue_opts = new Dictionary<string, object>();
             queue_opts["x-message-ttl"] = conf.QueueTTL;
 
-            queue_name = conf.QueuePrefix + "." + hostname;
+            this.queue_name = this.conf.QueuePrefix + "." + hostname;
 
-            channel.ExchangeDeclare(conf.ExchangeName, conf.ExchangeType.ToLower(), conf.ExchangeDurable, conf.ExchangeAutodelete, null);
-            channel.QueueDeclare(queue_name, conf.QueueDurable, conf.QueueExclusive, conf.QueueAutodelete, queue_opts);
-            channel.QueueBind(queue_name, conf.ExchangeName, queue_name);
+            this.channel.ExchangeDeclare(this.conf.ExchangeName, this.conf.ExchangeType.ToLower(), this.conf.ExchangeDurable, this.conf.ExchangeAutodelete, null);
+            this.channel.QueueDeclare(this.queue_name, this.conf.QueueDurable, this.conf.QueueExclusive, this.conf.QueueAutodelete, queue_opts);
+            this.channel.QueueBind(this.queue_name, this.conf.ExchangeName, this.queue_name);
         }
 
         public Message NextMessage()
         {
-            if (consumer == null)
+            if (this.consumer == null)
             {
-                consumer = new QueueingBasicConsumer(channel);
-                channel.BasicConsume(queue_name, true, consumer);
+                this.consumer = new QueueingBasicConsumer(this.channel);
+                this.channel.BasicConsume(this.queue_name, true, this.consumer);
             }
 
-            BasicGetResult result = channel.BasicGet(queue_name, true);
+            BasicGetResult result = channel.BasicGet(this.queue_name, true);
             if (result != null)
             {
-                channel.BasicAck(result.DeliveryTag, false);
+                this.channel.BasicAck(result.DeliveryTag, false);
 
                 string json = Encoding.UTF8.GetString(result.Body, 0, result.Body.Length);
 
@@ -79,18 +79,18 @@ namespace Psistats.MessageQueue
 
         public void DeleteQueue()
         {
-            channel.QueueDelete(queue_name);
+            this.channel.QueueDelete(this.queue_name);
         }
 
         public void Send(string msg)
         {
-            IBasicProperties p = channel.CreateBasicProperties();
+            IBasicProperties p = this.channel.CreateBasicProperties();
             p.DeliveryMode = 2;
             p.ContentType = "application/json";
             p.ContentEncoding = "UTF-8";
 
             byte[] bytes = Encoding.Default.GetBytes(msg);
-            channel.BasicPublish(conf.ExchangeName, queue_name, p, bytes);
+            this.channel.BasicPublish(conf.ExchangeName, queue_name, p, bytes);
         }
 
         public void Send(Message msg)
@@ -100,11 +100,11 @@ namespace Psistats.MessageQueue
 
         public void Close()
         {
-            channel.Close();
-            channel.Dispose();
+            this.channel.Close();
+            this.channel.Dispose();
 
-            conn.Close();
-            conn.Dispose();
+            this.conn.Close();
+            this.conn.Dispose();
         }
     }
 }
