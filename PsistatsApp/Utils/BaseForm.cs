@@ -16,16 +16,16 @@ namespace Psistats.App.Utils
     /// </remarks>
     public partial class BaseForm : Form
     {
-        delegate void SetComboBoxCallback(ComboBox control, string text);
-        delegate void SetCheckBoxCallback(CheckBox control, bool value);
-        delegate void SetCheckedListBoxCallback(CheckedListBox control, bool[] items);
-        delegate void SetWindowHeightCallback(Form control, int height);
-        delegate void SetTextContentCallback(Control control, string text);
-        delegate void SetLabelContentCallback(Label control, string text);
-        delegate void SetVisibleCallback(Control control, bool visible);
-        delegate void ThreadShowCallback(Control control);
-        delegate void ThreadCloseCallback(Form control);
-        delegate void ThreadEnableCallback(Control control, bool enabled);
+        protected delegate void SetComboBoxCallback(ComboBox control, string text);
+        protected delegate void SetCheckBoxCallback(CheckBox control, bool value);
+        protected delegate void SetCheckedListBoxCallback(CheckedListBox control, bool[] items);
+        protected delegate void SetWindowHeightCallback(Form control, int height);
+        protected delegate void SetTextContentCallback(Control control, string text);
+        protected delegate void SetLabelContentCallback(Label control, string text);
+        protected delegate void SetVisibleCallback(Control control, bool visible);
+        protected delegate void ThreadShowCallback(Control control);
+        protected delegate void ThreadCloseCallback(Form control);
+        protected delegate void ThreadEnableCallback(Control control, bool enabled);
 
         public void ThreadEnable(Control control, bool enabled)
         {
