@@ -48,12 +48,12 @@ namespace Psistats.MessageQueue
         }
 
         [DataMember(EmitDefaultValue = false)]
-        double cpu_temp;
+        double cputemp;
 
-        public double Cpu_temp
+        public double CpuTemp
         {
-            get { return cpu_temp; }
-            set { cpu_temp = value; }
+            get { return cputemp; }
+            set { cputemp = value; }
         }
 
         [DataMember(EmitDefaultValue = false)]
@@ -69,12 +69,12 @@ namespace Psistats.MessageQueue
         {
             Message msg = new Message();
 
-            msg.hostname = stat.Hostname;
-            msg.uptime = stat.Uptime;
-            msg.ipaddr = stat.Ipaddr;
-            msg.cpu = stat.Cpu;
-            msg.cpu_temp = (double) stat.CpuTemp;
-            msg.mem = stat.Mem;
+            msg.Hostname = stat.Hostname;
+            msg.Uptime = stat.Uptime;
+            msg.Ipaddr = stat.Ipaddr;
+            msg.Cpu = stat.Cpu;
+            msg.CpuTemp = (double) stat.CpuTemp;
+            msg.Mem = stat.Mem;
 
             return msg;
         }

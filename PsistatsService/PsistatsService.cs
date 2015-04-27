@@ -98,12 +98,12 @@ namespace Psistats.Service
 
                 if (this.conf.DebugEnabled)
                 {
-                    this.DebugConfig(conf);
+                    this.DebugConfig(this.conf);
 
                     IHardware cpu = this.stat.GetCpuHardware();
                     this.Debug("CPU Detected:" + cpu.HardwareType + " - " + cpu.Name);
 
-                    ISensor cpu_sensor = stat.GetCpuSensor();
+                    ISensor cpu_sensor = this.stat.GetCpuSensor();
                     this.Debug("CPU Temp Sensor Detected:" + cpu_sensor.SensorType + " - " + cpu_sensor.Name);
                 }
 
@@ -140,7 +140,7 @@ namespace Psistats.Service
         {
             try
             {
-                if (!server.IsConnected())
+                if (!this.server.IsConnected())
                 {
                     this.server.Connect();
                     this.server.Bind(this.stat.Hostname);
@@ -201,7 +201,7 @@ namespace Psistats.Service
                     {
                         if (this.stat.CpuTemp != null)
                         {
-                            msg.Cpu_temp = (double) this.stat.CpuTemp;
+                            msg.CpuTemp = (double) this.stat.CpuTemp;
                         }
                     }
                     catch (ManagementException)
@@ -232,9 +232,9 @@ namespace Psistats.Service
         private void SecondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
             Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
-            msg.Hostname = stat.Hostname;
-            msg.Uptime = stat.Uptime;
-            msg.Ipaddr = stat.Ipaddr;
+            msg.Hostname = this.stat.Hostname;
+            msg.Uptime = this.stat.Uptime;
+            msg.Ipaddr = this.stat.Ipaddr;
             this.Courier(msg);
         }
     }

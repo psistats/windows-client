@@ -31,7 +31,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                ThreadEnableCallback d = new ThreadEnableCallback(ThreadEnable);
+                ThreadEnableCallback d = new ThreadEnableCallback(this.ThreadEnable);
                 control.Invoke(d, new object[] { control, enabled });
             }
             else
@@ -44,7 +44,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                ThreadCloseCallback d = new ThreadCloseCallback(ThreadClose);
+                ThreadCloseCallback d = new ThreadCloseCallback(this.ThreadClose);
                 control.Invoke(d, new object[] { control });
             }
             else
@@ -58,7 +58,7 @@ namespace Psistats.App.Utils
             
             if (this.InvokeRequired)
             {
-                ThreadShowCallback d = new ThreadShowCallback(ThreadShow);
+                ThreadShowCallback d = new ThreadShowCallback(this.ThreadShow);
                 this.Invoke(d, new object[] { control });
             }
             else
@@ -72,7 +72,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetCheckBoxCallback d = new SetCheckBoxCallback(SetCheckBox);
+                SetCheckBoxCallback d = new SetCheckBoxCallback(this.SetCheckBox);
                 control.Invoke(d, new object[] { control, value });
             }
             else
@@ -85,7 +85,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetCheckedListBoxCallback d = new SetCheckedListBoxCallback(SetCheckedListBox);
+                SetCheckedListBoxCallback d = new SetCheckedListBoxCallback(this.SetCheckedListBox);
                 control.Invoke(d, new object[] { control, items });
             }
             else
@@ -101,7 +101,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetTextContentCallback d = new SetTextContentCallback(SetTextContent);
+                SetTextContentCallback d = new SetTextContentCallback(this.SetTextContent);
                 control.Invoke(d, new object[] { control, text });
             }
             else
@@ -114,7 +114,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetLabelContentCallback d = new SetLabelContentCallback(SetLabelContent);
+                SetLabelContentCallback d = new SetLabelContentCallback(this.SetLabelContent);
                 control.Invoke(d, new object[] { control, text });
             }
             else
@@ -127,7 +127,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetWindowHeightCallback d = new SetWindowHeightCallback(SetWindowHeight);
+                SetWindowHeightCallback d = new SetWindowHeightCallback(this.SetWindowHeight);
                 control.Invoke(d, new object[] { control, height });
             }
             else
@@ -140,7 +140,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetComboBoxCallback d = new SetComboBoxCallback(SetComboBox);
+                SetComboBoxCallback d = new SetComboBoxCallback(this.SetComboBox);
                 control.Invoke(d, new object[] { control, text });
             }
             else
@@ -153,7 +153,7 @@ namespace Psistats.App.Utils
         {
             if (control.InvokeRequired)
             {
-                SetVisibleCallback d = new SetVisibleCallback(SetVisible);
+                SetVisibleCallback d = new SetVisibleCallback(this.SetVisible);
                 control.Invoke(d, new object[] { control, visible });
             }
             else
