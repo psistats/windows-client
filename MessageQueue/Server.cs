@@ -1,8 +1,8 @@
-﻿using RabbitMQ.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RabbitMQ.Client;
 
 namespace Psistats.MessageQueue
 {
@@ -44,12 +44,6 @@ namespace Psistats.MessageQueue
             this.channel = this.conn.CreateModel();
         }
 
-        public string GetQueueName()
-        {
-            return queue_name;
-        }
-
-
         public void Bind(string hostname)
         {
             var queue_opts = new Dictionary<string, object>();
@@ -62,7 +56,7 @@ namespace Psistats.MessageQueue
             channel.QueueBind(queue_name, conf.ExchangeName, queue_name);
         }
 
-        public Message getNextMessage()
+        public Message NextMessage()
         {
             if (consumer == null)
             {
