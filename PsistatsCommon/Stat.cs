@@ -15,8 +15,8 @@ namespace Psistats
 {
     public class Stat
     {
-        private List<String> _ipaddr = null;
-        private string _hostname = null;
+        private List<String> ipaddr = null;
+        private string hostname = null;
 
         private PerformanceCounter cpuCounter;
         private PerformanceCounter uptimeCounter;
@@ -29,7 +29,7 @@ namespace Psistats
 
         private Computer computer;
 
-        public double uptime
+        public double Uptime
         {
             get
             {
@@ -41,36 +41,36 @@ namespace Psistats
             }
         }
 
-        public string hostname
+        public string Hostname
         {
             get
             {
-                if (this._hostname == null)
+                if (this.hostname == null)
                 {
-                    this._hostname = System.Environment.GetEnvironmentVariable("COMPUTERNAME").ToLower();
+                    this.hostname = System.Environment.GetEnvironmentVariable("COMPUTERNAME").ToLower();
                 }
 
-                return this._hostname;
+                return this.hostname;
             }
         }
 
-        public List<String> ipaddr
+        public List<String> Ipaddr
         {
             get
             {
-                if (this._ipaddr == null)
+                if (this.ipaddr == null)
                 {
-                    this._ipaddr = new List<string>();
-                } else if (this._ipaddr.Count() == 0) {
-                    this._ipaddr.Add(this.localIPAddress());
+                    this.ipaddr = new List<string>();
+                } else if (this.ipaddr.Count() == 0) {
+                    this.ipaddr.Add(this.localIPAddress());
                 }
 
-                return this._ipaddr;
+                return this.ipaddr;
             }
         }
 
         
-        public double cpu {
+        public double Cpu {
             get {
                 return this.getCpuPercent();
             }
@@ -132,7 +132,7 @@ namespace Psistats
             }
         }
 
-        public double? cpu_temp
+        public double? CpuTemp
         {
             get
             {
@@ -153,7 +153,7 @@ namespace Psistats
             }
         }
 
-        public double mem
+        public double Mem
         {
             get
             {

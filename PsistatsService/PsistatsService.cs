@@ -109,7 +109,7 @@ namespace Psistats.Service
 
                 this.server = new Psistats.MessageQueue.Server(this.conf);
                 this.server.Connect();
-                this.server.Bind(this.stat.hostname);
+                this.server.Bind(this.stat.Hostname);
 
                 this.primaryTimer = new System.Timers.Timer(this.conf.PrimaryTimer * 1000);
                 this.primaryTimer.AutoReset = true;
@@ -143,7 +143,7 @@ namespace Psistats.Service
                 if (!server.IsConnected())
                 {
                     this.server.Connect();
-                    this.server.Bind(this.stat.hostname);
+                    this.server.Bind(this.stat.Hostname);
                 }
 
                 if (this.conf.DebugEnabled)
@@ -191,17 +191,17 @@ namespace Psistats.Service
             try
             {
                 Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
-                msg.Hostname = this.stat.hostname;
-                msg.Mem = this.stat.mem;
-                msg.Cpu = this.stat.cpu;
+                msg.Hostname = this.stat.Hostname;
+                msg.Mem = this.stat.Mem;
+                msg.Cpu = this.stat.Cpu;
 
                 if (this.conf.EnableCpuTemp)
                 {
                     try
                     {
-                        if (this.stat.cpu_temp != null)
+                        if (this.stat.CpuTemp != null)
                         {
-                            msg.Cpu_temp = (double) this.stat.cpu_temp;
+                            msg.Cpu_temp = (double) this.stat.CpuTemp;
                         }
                     }
                     catch (ManagementException)
@@ -232,9 +232,9 @@ namespace Psistats.Service
         private void SecondaryWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
             Psistats.MessageQueue.Message msg = new Psistats.MessageQueue.Message();
-            msg.Hostname = stat.hostname;
-            msg.Uptime = stat.uptime;
-            msg.Ipaddr = stat.ipaddr;
+            msg.Hostname = stat.Hostname;
+            msg.Uptime = stat.Uptime;
+            msg.Ipaddr = stat.Ipaddr;
             this.Courier(msg);
         }
     }
